@@ -6,6 +6,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <cctype>
 
 using std::string;
 using std::istringstream;
@@ -31,7 +32,7 @@ void UI::master(){
 }
 
 // initial requirements
-UI::UI() : m_rowsA(1 << 31), m_colsA(1 << 31), m_rowsB(1 << 31), m_colsB(1 << 31), m_rowsC(1 << 31), m_colsC(1 << 31){
+UI::UI() : m_rowsA(1 << 31), m_colsA(1 << 31), m_rowsB(1 << 31), m_colsB(1 << 31), m_rowsC(1 << 31), m_colsC(1 << 31) {
 }
 
 // terminating message
@@ -58,7 +59,7 @@ void UI::readInput(const InputType inputType, const MatrixID matrixID){
     m_buffer = istringstream(s);
 }
 
-bool UI::isValidInput(const std::string& input, const InputType inputType){
+bool UI::isValidInput(const string& input, const InputType inputType){
     switch(inputType){
         case operation:
             return input.find_first_not_of("0123") == std::string::npos;
@@ -73,24 +74,42 @@ bool UI::isValidInput(const std::string& input, const InputType inputType){
 }
 
 
-bool UI::parseInput(const std::string& input, const MatrixID matrixID){
+bool UI::parseInput(const string& input, const MatrixID matrixID){
     m_buffer = istringstream(input);
     Entries test = 0.0; int count = 0;
     
-    while (m_buffer >> test){
-        count++;
-    }
-    
-    if (!m_buffer.eof()) return false;
+    if (!validateInputFormat(input)) return false;
     
     switch(matrixID){
         case A:
             return handleMatrixA(count);
         case B:
-            return handleMatrixB(count);
+            return handleMatrixB(count);    // if (!m_buffer.eof()) return false;
         case NaM:
             cout << "Input type cannot be NaM if parsing input." << endl;
             exit(-1);
+    }
+        
+    return true;
+}
+
+enum previousInput {digit, dot, minus, null};
+
+bool UI::validateInputFormat(const string& input){
+    int n = static_cast<int> (input.size());
+    previousInput prev = null;
+    for (int i = 0 ; i < n ; i++){
+        if (isdigit(input[i])){
+            prev = digit;
+        } else if (input[i] == ' '){
+            prev = null;
+        } else if (input[i] == '-'){
+            if (prev != null) return false;
+            prev = minus;
+        } else if (input[i] == '.'){
+            if (prev == dot) return false;
+            prev = dot;
+        } else return false;
     }
     
     return true;
@@ -102,7 +121,7 @@ bool UI::parseInput(const std::string& input, const MatrixID matrixID){
 // ************
 
 bool UI::handleMatrixA(const int colEntries){
-    return false;
+    
 }
 
 bool UI::handleMatrixB(const int colEntries){

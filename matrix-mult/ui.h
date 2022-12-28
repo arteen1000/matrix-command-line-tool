@@ -39,18 +39,22 @@ protected:
     // read input from the user
     void readInput(const InputType, const MatrixID);
 
-    // main input handler
+    // general input validator for readInput()
     bool isValidInput(const std::string&, const InputType);
     
-    // ensure is of correct form
-    // also ensure does not contradict prior entries -> i.e, same # of cols
+    // matrix input validator for isValidInput()
     bool parseInput(const std::string&, const MatrixID);
+    
+    // handle form-checking for parseInput()
+    // white-space de-limitted numerical values
+    bool validateInputFormat(const std::string&);
     
     // ************
     // DIM-HANDLERS
     // ************
     
     // handle dim-setting & updating for parseInput()
+    // for dynamic matrices
     bool handleMatrixA(const int);
     bool handleMatrixB(const int);
     
