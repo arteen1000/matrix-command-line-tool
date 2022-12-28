@@ -83,14 +83,14 @@ private:
     std::istringstream m_buffer;
     
     // used to handle dimensions of matrices
-    int32_t m_rowsA = 1 << 31;
-    int32_t m_colsA = 1 << 31;
+    int32_t m_rowsA;
+    int32_t m_colsA;
     
-    int32_t m_rowsB = 1 << 31;
-    int32_t m_colsB = 1 << 31;
+    int32_t m_rowsB;
+    int32_t m_colsB;
     
-    int32_t m_rowsC = 1 << 31;
-    int32_t m_colsC = 1 << 31;
+    int32_t m_rowsC;
+    int32_t m_colsC;
     
 };
 

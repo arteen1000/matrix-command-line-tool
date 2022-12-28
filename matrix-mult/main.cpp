@@ -36,6 +36,9 @@ using namespace std;
 // EXPERIMENTS
 // **********
 
+int main(){
+    cout << __cplusplus << endl;
+}
 
 // testing basics of how input stream works
 // sets 'int' or 'double' to 0 when conversion from buffer fails
@@ -112,41 +115,41 @@ using namespace std;
 // fail() sets on conversion//read errors
 // bad() sets on BUFFER errors -> no more disk storage or something really weird happened
 // get to be less draconian about input :(, would probably have to iterate through if I really wanted to do some stuff with it.
-int main(){
-    
-    string input0 = "1 2 3";    // Failed, EOF, 'test' retains correct value -> standard what I want
-    
-    string input1 = "1 2 3-";   // Failed, EOF, 'test' set to 0 b/c conversion failed -> why is bad not set?, not what I want -> how do I check for this?
-    
-    string input2 = "1 2-3";    // Failed, EOF, 'test', correct values -> weird behavior (would prefer this didn't occur)
-    string input3 = "1 2 -3 "; // Failed, EOF, correct values -> does what I want it to
-    string input4 = ".1 2---3  ";   // Failed, buffer position 4, 'test' set to 0   -> does what I want it to
-    string input5 = ".1        2       3     "; // Failed, EOF, correct values      -> does what I want
-    string input6 = ".1 2 --3 ";    // Failed, buffer position 4, 'test' set to 0 -> does what I want
-    string input7 = ".1 - 2 3";     // Failed, buffer position 2, 'test set to 0 -> does what I want
-    
-    istringstream buffer(input1);
-    double test = 0;
-    while (buffer >> test){
-        cout << "In loop" << endl;
-        cout << "Value of test: " << test << endl;
-        cout << "Buffer position: " << buffer.tellg() << endl;
-    }
-    cout << "Out of loop" << endl;
-    cout << test << endl;
-    
-    if (buffer.good())          // no error flags set
-        cout << "Good" << endl;
-    if (buffer.bad())           // read/write error on i/o (integrity of stream lost) -> never set?
-        cout << "Bad" << endl;
-    if (buffer.fail())          // logical error on i/o (failure to convert) -> set on EOF
-        cout << "Failed" << endl;
-    if (buffer.eof())           // EOF reached on input op
-        cout << "EOF" << endl;
-    
-    // .clear() would clear stream
-    
-}
+//int main(){
+//
+//    string input0 = "1 2 3";    // Failed, EOF, 'test' retains correct value -> standard what I want
+//
+//    string input1 = "1 2 3-";   // Failed, EOF, 'test' set to 0 b/c conversion failed -> why is bad not set?, not what I want -> how do I check for this?
+//
+//    string input2 = "1 2-3";    // Failed, EOF, 'test', correct values -> weird behavior (would prefer this didn't occur)
+//    string input3 = "1 2 -3 "; // Failed, EOF, correct values -> does what I want it to
+//    string input4 = ".1 2---3  ";   // Failed, buffer position 4, 'test' set to 0   -> does what I want it to
+//    string input5 = ".1        2       3     "; // Failed, EOF, correct values      -> does what I want
+//    string input6 = ".1 2 --3 ";    // Failed, buffer position 4, 'test' set to 0 -> does what I want
+//    string input7 = ".1 - 2 3";     // Failed, buffer position 2, 'test set to 0 -> does what I want
+//
+//    istringstream buffer(input1);
+//    double test = 0;
+//    while (buffer >> test){
+//        cout << "In loop" << endl;
+//        cout << "Value of test: " << test << endl;
+//        cout << "Buffer position: " << buffer.tellg() << endl;
+//    }
+//    cout << "Out of loop" << endl;
+//    cout << test << endl;
+//
+//    if (buffer.good())          // no error flags set
+//        cout << "Good" << endl;
+//    if (buffer.bad())           // read/write error on i/o (integrity of stream lost) -> never set?
+//        cout << "Bad" << endl;
+//    if (buffer.fail())          // logical error on i/o (failure to convert) -> set on EOF
+//        cout << "Failed" << endl;
+//    if (buffer.eof())           // EOF reached on input op
+//        cout << "EOF" << endl;
+//
+//    // .clear() would clear stream
+//
+//}
 
 
  /*

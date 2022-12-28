@@ -31,8 +31,7 @@ void UI::master(){
 }
 
 // initial requirements
-UI::UI() {
-    
+UI::UI() : m_rowsA(1 << 31), m_colsA(1 << 31), m_rowsB(1 << 31), m_colsB(1 << 31), m_rowsC(1 << 31), m_colsC(1 << 31){
 }
 
 // terminating message
