@@ -109,7 +109,9 @@ using namespace std;
 // this works for my purposes, just lets some ugly input through (input 1, input5, input7, but is always correct and coherent
 
 // attempting to read EOF always fails buffer -> error state (returns false) and sets fail bit
-// attempting to read
+// fail() sets on conversion//read errors
+// bad() sets on BUFFER errors -> no more disk storage or something really weird happened
+// get to be less draconian about input :(, would probably have to iterate through if I really wanted to do some stuff with it.
 int main(){
     
     string input0 = "1 2 3";    // Failed, EOF, 'test' retains correct value -> standard what I want
