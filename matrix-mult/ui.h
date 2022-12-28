@@ -17,6 +17,9 @@ enum InputType {operation, scalar, matrix};
 // ensure parsing for correct matrix -> NaM = Not a Matrix
 enum MatrixID {A, B, NaM};
 
+// used for input validation
+enum previousInput {digit, dot, minus, null};
+
 class UI{
 public:
     // ******
@@ -37,18 +40,24 @@ protected:
     // READ AND PARSE INPUT
     // ********************
     
-    // read input from the user
-    void readInput(const InputType, const MatrixID);
+    // read input from the user & coordinate destination
+    void coordinateInput(const InputType, const MatrixID);
 
     // general input validator for readInput()
     bool isValidInput(const std::string&, const InputType);
     
-    // matrix input validator for isValidInput()
-    bool parseInput(const std::string&, const MatrixID);
+    // input destination coordinator for non-matrix inputs
+    bool otherInput(const std::string&, const InputType);
     
-    // handle form-checking for parseInput()
+    // if (scalar input of correct form) set scalar; else return false;
+    bool handleScalar(const std::string&);
+    
+    // matrix input validator for isValidInput() & coordinator
+    bool matrixInput(const std::string&, const MatrixID);
+    
+    // handle form-checking for matrixInput()
     // white-space de-limitted numerical values
-    bool validateInputFormat(const std::string&);
+    bool validateMatrixInputFormat(const std::string&);
     
     // ************
     // DIM-HANDLERS
@@ -101,6 +110,12 @@ private:
     std::vector<std::vector<Entries>> m_A;
     std::vector<std::vector<Entries>> m_B;
     std::vector<std::vector<Entries>> m_C;
+    
+    // scalar
+    int64_t m_k;
+    
+    // operation code
+    int32_t m_operation;
     
 };
 

@@ -22,7 +22,7 @@ using std::endl;
 // program control flow
 void UI::master(){
     
-    readInput(matrix, A);
+    coordinateInput(matrix, A);
 //    matrixOperationPrompt();
 //    verifyOperationPossible();
 //    allocateDependencies();
@@ -46,16 +46,15 @@ UI::~UI(){
 // READ AND PARSE INPUT
 // ********************
 
-void UI::readInput(const InputType inputType, const MatrixID matrixID){
+void UI::coordinateInput(const InputType inputType, const MatrixID matrixID){
     string s; bool valid;
     do {
         getline(cin, s);
-        if (!(valid = isValidInput(s, inputType)) || (inputType == matrix && !parseInput(s, matrixID))){
+        if (!(valid = isValidInput(s, inputType)) || !otherInput(s, inputType) || !matrixInput(s, matrixID)){
             cout << "Invalid input. Try again: ";
         }
     } while (!valid);
     
-    if (inputType == matrix) parseInput(s, matrixID);
     m_buffer = istringstream(s);
 }
 
@@ -73,11 +72,40 @@ bool UI::isValidInput(const string& input, const InputType inputType){
     }
 }
 
+bool UI::otherInput(const std::string & input, const InputType inputType){
+    if (inputType == matrix) return false;
+    else if (inputType == operation){
+        m_buffer = istringstream(input);
+        m_buffer >> m_operation;
+        return true;
+    } else return handleScalar(input);
+}
 
-bool UI::parseInput(const string& input, const MatrixID matrixID){
+bool UI::handleScalar(const string& input){
+    int n = static_cast<int> (input.size());
+    previousInput prev = null;
+    for (int i = 0 ; i < n ; i++){
+        if (isdigit(input[i])){
+            prev = digit;
+        } else if (input[i] == '-'){
+            if (prev != null) return false;
+            prev = minus;
+        } else if (input[i] == '.'){
+            if (prev == dot) return false;
+            prev = dot;
+        } else return false;
+    }
+    m_buffer = istringstream(input);
+    m_buffer >> m_k;
+    return true;
+}
+
+bool UI::matrixInput(const string& input, const MatrixID matrixID){
+    if (matrixID == NaM) return false;
+    
     m_buffer = istringstream(input);
     
-    if (!validateInputFormat(input)) return false;
+    if (!validateMatrixInputFormat(input)) return false;
     
     switch(matrixID){
         case A:
@@ -85,16 +113,14 @@ bool UI::parseInput(const string& input, const MatrixID matrixID){
         case B:
             return handleMatrixB(input);    // if (!m_buffer.eof()) return false;
         case NaM:
-            cout << "Input type cannot be NaM if parsing input." << endl;
+            cout << "Cannot handle NaM" << endl;
             exit(-1);
     }
         
     return true;
 }
 
-enum previousInput {digit, dot, minus, null};
-
-bool UI::validateInputFormat(const string& input){
+bool UI::validateMatrixInputFormat(const string& input){
     int n = static_cast<int> (input.size());
     previousInput prev = null;
     for (int i = 0 ; i < n ; i++){
