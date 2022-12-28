@@ -76,15 +76,14 @@ bool UI::isValidInput(const string& input, const InputType inputType){
 
 bool UI::parseInput(const string& input, const MatrixID matrixID){
     m_buffer = istringstream(input);
-    Entries test = 0.0; int count = 0;
     
     if (!validateInputFormat(input)) return false;
     
     switch(matrixID){
         case A:
-            return handleMatrixA(count);
+            return handleMatrixA(input);
         case B:
-            return handleMatrixB(count);    // if (!m_buffer.eof()) return false;
+            return handleMatrixB(input);    // if (!m_buffer.eof()) return false;
         case NaM:
             cout << "Input type cannot be NaM if parsing input." << endl;
             exit(-1);
@@ -120,11 +119,11 @@ bool UI::validateInputFormat(const string& input){
 // DIM-HANDLERS
 // ************
 
-bool UI::handleMatrixA(const int colEntries){
-    
+bool UI::handleMatrixA(const string& input){
+    return false;
 }
 
-bool UI::handleMatrixB(const int colEntries){
+bool UI::handleMatrixB(const string& input){
     return false;
 }
 

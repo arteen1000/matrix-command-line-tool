@@ -9,6 +9,7 @@
 #include "matrix.h"
 #include <string>
 #include <sstream>
+#include <vector>
 
 // ensure correct input received
 enum InputType {operation, scalar, matrix};
@@ -55,8 +56,8 @@ protected:
     
     // handle dim-setting & updating for parseInput()
     // for dynamic matrices
-    bool handleMatrixA(const int);
-    bool handleMatrixB(const int);
+    bool handleMatrixA(const std::string&);
+    bool handleMatrixB(const std::string&);
     
     // *********
     // DIRECTORS
@@ -95,6 +96,11 @@ private:
     
     int32_t m_rowsC;
     int32_t m_colsC;
+    
+    // matrices
+    std::vector<std::vector<Entries>> m_A;
+    std::vector<std::vector<Entries>> m_B;
+    std::vector<std::vector<Entries>> m_C;
     
 };
 

@@ -5,20 +5,21 @@
 #ifndef matrix_h
 #define matrix_h
 
+#include <vector>
 typedef double Entries;
 
 class Matrix{
 public:
-    // *********
-    // ALLOCATOR
-    // *********
-    Entries* createMatrix(int rows, int cols);
+    // ***************
+    // CREATE MATRICES
+    // ***************
     
-    // ************
-    // DE-ALLOCATOR
-    // ************
+    // static
+    std::vector<std::vector<Entries>> createMatrix(const int, const int);
     
-    void freeMatrix(Entries* matrix, int rows, int cols);
+    // dynamic
+    // return false if row size inconsistent with col size
+    bool addRow(std::vector<std::vector<Entries>>&, std::istringstream&, int&, const int);
     
     // ****************************************************
     // OPERATORS (return nullptr if operation not possible)

@@ -6,19 +6,16 @@
 
 #include "matrix.h"
 
-// ************************
-// ALLOCATOR & DE-ALLOCATOR
-// ************************
+// ***************
+// CREATE MATRICES
+// ***************
 
-Entries* Matrix::createMatrix(int rows, int cols){
-    Entries* matrix = new Entries[rows * cols]();
-    return matrix;
+std::vector<std::vector<Entries>> createMatrix(const int rows, const int cols){
+    return {};
 }
 
-
-void Matrix::freeMatrix(Entries* matrix, int rows, int cols){
-    delete [] matrix;
-    matrix = nullptr;
+bool addRow(std::vector<std::vector<Entries>>&, std::istringstream&, int&, const int){
+    return false;
 }
 
 // ****************************************************
@@ -103,4 +100,9 @@ void Matrix::performMatrixMultiply(Entries* A, Entries* B, Entries* C , int rows
 //            C[i][j] = A[i][j] + B[i][j];
 //        }
 //    }
+//}
+
+//Entries* Matrix::createMatrix(int rows, int cols){
+//    Entries* matrix = new Entries[rows * cols]();
+//    return matrix;
 //}
