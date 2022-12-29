@@ -41,7 +41,7 @@ protected:
     // ********************
     
     // read input from the user & coordinate destination
-    void coordinateInput(const InputType, const MatrixID);
+    void readInput(const InputType, const MatrixID);
 
     // valid input characters fit required scheme
     bool isValidInput(const std::string&, const InputType);
@@ -55,31 +55,50 @@ protected:
     // ensure matrix input is white-space de-limitted numerical values
     bool validateMatrixInputFormat(const std::string&);
     
-    // ********
-    // HANDLERS
-    // ********
+    // *******************
+    // ALLOCATION-HANDLERS
+    // *******************
     
     // handle validating & inputting m_k
     bool handleScalar(const std::string&);
     
     // handle additional type validation & allocating input into dynamic matrices
     bool handleMatrixA(const std::string&);
+    // matrix B also handles checking for addition compatibility during user input (# of cols = # of cols)
     bool handleMatrixB(const std::string&);
     
-    // *****************
-    // OPERATION VERIFIER
-    // *****************
+    // ******************
+    // OUTPUT && REFACTOR
+    // ******************
     
-    // verify operation possibility based on current user input
-    bool verifyOperations();
+    // output matrix
+    void outputMatrix(const std::vector< std::vector<Entries> >&, const int32_t, const int32_t);
+    
+    // refactor matrix presentation
+    void refactorMatrix(const std::vector< std::vector<Entries> >&, const int32_t, const int32_t);
     
     // *********
-    // DIRECTORS
+    // MAIN FLOW
     // *********
+    
+    // MASTER
+    // ------
     
     // prompt user to select wanted operation
-    // have sub-handlers handle each select operation
     void matrixOperationPrompt();
+    
+    // SLAVES
+    // ------
+    void readScalarMult();
+    void readMatrixAdd();
+    void readMatrixMult();
+    
+    
+    
+    
+    
+    // verify operation possibility based on user input
+    bool verifyOperations();
     
     // set dims of necessary dependencies and allocate for size
     void allocateDependencies();
@@ -90,15 +109,6 @@ protected:
     // responsible for resetting all constructs to default
     void reinitializeConstructs();
     
-    
-    // idea: format matrix C output nicely by taking a look at the largest row size and adjusting the rest with spaces for it? I love this idea. If there's decimals, maybe go as far as lining up above correct decimal point?
-    // very difficult to implement
-    
-    // *******
-    // DEBUG
-    // ******
-    
-    void outputMatrixA();
     
 private:
     // used to handle input allocation
@@ -120,13 +130,16 @@ private:
     std::vector< std::vector<Entries> > m_C;
     
     // scalar
-    int64_t m_k;
+    double m_k;
     
     // operation code
     int32_t m_operation;
     
     // matrix operations
     Matrix m_matrix;
+    
+    // prompt?
+    bool m_prompt;
 };
 
 #endif /* ui_hpp */
