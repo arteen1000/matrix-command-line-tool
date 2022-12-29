@@ -23,6 +23,93 @@ int main(){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+//int main(){
+//    vector<vector<int>> matrix;
+//    if (true){
+//        vector<int> a = {1, 2, 3};
+//        vector<int> b = {4, 5, 6};
+//        cout << a.capacity() << " " << a.size() << endl;
+//        matrix.push_back(std::move(a));
+//        matrix.push_back(std::move(b));
+//        cout << a.capacity() << " " << a.size() << endl;
+//    }
+//    cout << matrix[0].size() << endl;
+//    cout << matrix[1].size() << endl;
+//    for (int i = 0 ; i < 2; i++){
+//        for (int j = 0 ; j < 3 ; j++){
+//            cout << matrix[i][j] << " ";
+//        }
+//        cout << endl;
+//    }
+////    matrix.clear();
+////    cout << matrix.capacity() << " " << matrix.size() << endl;  // doesn't actually clear :/
+//
+//    matrix = vector<vector<int>>(); // this does :)
+//        cout << matrix.capacity() << " " << matrix.size() << endl;
+//}
+
+/*
+ what a = std::move(b), could also use a.swap(b) instead (b doesnt' clear) -> since contents are heaps, swaps internal representations (
+ moving (b) clears(b) -> b now has empty internal rep. clear() is function to do this. let's see.
+ move is very fast ;) -> just leads to multi-level array, but not an issue really b/c of my algorithms
+https://stackoverflow.com/questions/12613428/stl-vector-moving-all-elements-of-a-vector
+*/
+
+// vector.clear() for outer vector causes all inner references out of scope -> destructed :)
+// however, the capacity maybe still be there let's test this
+// allocated in memory as I expected -> liek a multi-level a rray
+
+
+// ****************************
+// PRINTING RAW VECTOR CONTENTS
+// ****************************
+//
+//#include <vector>
+//
+//struct my_vector {
+//    int *begin;
+//    int *end;
+//    int *end_capacity;
+//};
+//
+//int main() {
+//    union vecunion {
+//        std::vector<int> stdvec;
+//        my_vector           myvec;
+//        ~vecunion() { /* do nothing */ }
+//    } vec = { std::vector<int>() };
+//    union veciterator {
+//        std::vector<int>::iterator stditer;
+//        int                       *myiter;
+//        ~veciterator() { /* do nothing */ }
+//    };
+//
+//    vec.stdvec.push_back(1); // Add something so we don't have an empty vector
+//
+//    std::cout
+//      << "vec.begin          = " << vec.myvec.begin << "\n"
+//      << "vec.end            = " << vec.myvec.end << "\n"
+//      << "vec.end_capacity   = " << vec.myvec.end_capacity << "\n"
+//      << "vec's size         = " << vec.myvec.end - vec.myvec.begin << "\n"
+//      << "vec's capacity     = " << vec.myvec.end_capacity - vec.myvec.begin << "\n"
+//      << "vector::begin()    = " << (veciterator { vec.stdvec.begin() }).myiter << "\n"
+//      << "vector::end()      = " << (veciterator { vec.stdvec.end()   }).myiter << "\n"
+//      << "vector::size()     = " << vec.stdvec.size() << "\n"
+//      << "vector::capacity() = " << vec.stdvec.capacity() << "\n"
+//      ;
+//}
+
 // ****************
 // ESCAPE SEQUENCES
 //*****************

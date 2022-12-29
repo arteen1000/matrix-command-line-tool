@@ -64,6 +64,7 @@ protected:
     // ************
     
     // handle dim-setting & updating for parseInput()
+    // ensure can enter input into matrix without bufer failing
     // for dynamic matrices
     bool handleMatrixA(const std::string&);
     bool handleMatrixB(const std::string&);

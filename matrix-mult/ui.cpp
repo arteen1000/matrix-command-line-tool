@@ -7,12 +7,14 @@
 #include <sstream>
 #include <iostream>
 #include <cctype>
+#include <vector>
 
 using std::string;
 using std::istringstream;
 using std::cin;
 using std::cout;
 using std::endl;
+using std::vector;
 
 
 // ******
@@ -82,20 +84,24 @@ bool UI::otherInput(const std::string & input, const InputType inputType){
 bool UI::handleScalar(const string& input){
     int n = static_cast<int> (input.size());
     previousInput prev = null;
+    int dotCount = 0; bool digitLast = false;
     for (int i = 0 ; i < n ; i++){
         if (isdigit(input[i])){
-            prev = digit;
+            prev = digit; digitLast = true;
         } else if (input[i] == '-'){
             if (prev != null) return false;
-            prev = minus;
-        } else if (input[i] == '.'){
+            prev = minus; digitLast = false;
+        } else {
             if (prev == dot) return false;
             prev = dot;
-        } else return false;
+            dotCount++; digitLast = false;
+        }
+        if (dotCount > 1) return false;
     }
+    if (!digitLast) return false;
     m_buffer = istringstream(input);
-    m_buffer >> m_k;
-    return true;
+    if (m_buffer >> m_k) return true;
+    return false;
 }
 
 bool UI::matrixInput(const string& input, const MatrixID matrixID){
@@ -120,18 +126,22 @@ bool UI::matrixInput(const string& input, const MatrixID matrixID){
 bool UI::validateMatrixInputFormat(const string& input){
     int n = static_cast<int> (input.size());
     previousInput prev = null;
+    int dotCount = 0;
     for (int i = 0 ; i < n ; i++){
         if (isdigit(input[i])){
             prev = digit;
         } else if (input[i] == ' '){
             prev = null;
+            dotCount = 0;
         } else if (input[i] == '-'){
             if (prev != null) return false;
             prev = minus;
-        } else if (input[i] == '.'){
+        } else {
             if (prev == dot) return false;
             prev = dot;
-        } else return false;
+            dotCount++;
+        }
+        if (dotCount > 1) return false;
     }
     
     return true;
@@ -142,7 +152,14 @@ bool UI::validateMatrixInputFormat(const string& input){
 // DIM-HANDLERS
 // ************
 
-bool UI::handleMatrixA(const string& input){
+bool UI::handleMatrixA(const string& input){    // as we input, have it return false if doesn't go to end of line (another input validation step)
+    Entries test;
+    m_buffer = istringstream(input);
+    int cols = 0; vector<Entries> row;
+    while (m_buffer >> test){
+        cols++;
+    }
+    if (!m_buffer.eof()) return false;
     return true;
 }
 
