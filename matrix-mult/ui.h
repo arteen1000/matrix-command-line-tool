@@ -74,31 +74,50 @@ protected:
     // output matrix
     void outputMatrix(const std::vector< std::vector<Entries> >&, const int32_t, const int32_t);
     
-    // refactor matrix presentation
-    void refactorMatrix(const std::vector< std::vector<Entries> >&, const int32_t, const int32_t);
+    // delete inputted matrix presentation
+    void refactorMatrix(const int32_t);
     
-    // *********
-    // MAIN FLOW
-    // *********
+    // delete inputted presentation of opcode/scalar (in case of bad input)
+    void refactorOther();
+    
+    // reset shared read refactoring/prompt objects
+    void resetRead();
+    
+    
+    // ***************
+    // USER INPUT FLOW
+    // **************
     
     // MASTER
     // ------
     
-    // prompt user to select wanted operation
-    void matrixOperationPrompt();
+    // prompt user to select wanted operation & handle the read
+    void handleUserInput();
     
     // SLAVES
     // ------
+    
     void readScalarMult();
     void readMatrixAdd();
     void readMatrixMult();
     
+    // individual matrix read
+    void readMatrix(MatrixID);
     
+    // ***************
+    // VERIFICATION
+    // **************
     
-    
+    // MASTER
+    // ------
     
     // verify operation possibility based on user input
-    bool verifyOperations();
+    bool verifyPossible();
+    
+    // SLAVES
+    // ------
+    
+    
     
     // set dims of necessary dependencies and allocate for size
     void allocateDependencies();
@@ -140,6 +159,9 @@ private:
     
     // prompt?
     bool m_prompt;
+    
+    // input errors
+    int32_t m_errors;
 };
 
 #endif /* ui_hpp */

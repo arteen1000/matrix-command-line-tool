@@ -17,6 +17,9 @@ using std::endl;
 using std::vector;
 
 
+#define UP_ONE_LINE "\033[A"
+#define DELETE_LINE "\033[2K"
+
 // ******
 // MASTER
 // ******
@@ -24,8 +27,8 @@ using std::vector;
 // program control flow
 void UI::master(){
     
-    matrixOperationPrompt();
-//    verifyOperationPossible();
+    handleUserInput();
+//    verifyPossible();
 //    allocateDependencies();
 //    performOperation();
 //    deallocateDependencies();
@@ -33,7 +36,7 @@ void UI::master(){
 }
 
 // initial requirements
-UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0), m_prompt(true) {
+UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0), m_prompt(true) , m_errors(0){
 }
 
 // terminating message
@@ -50,9 +53,9 @@ UI::~UI(){
 void UI::readInput(const InputType inputType, const MatrixID matrixID){
     string s;
     retry:
-        getline(cin, s);
+        std::getline(cin, s);
         if (!(isValidInput(s, inputType)) || (!otherInput(s, inputType) && !matrixInput(s, matrixID))){
-            cout << "Invalid input. Try again: ";
+            cout << "Invalid input. Try again: "; m_errors++;
             goto retry;
         }
 }
@@ -189,22 +192,39 @@ bool UI::handleMatrixB(const string& input){
 // ******************
 
 // output & refactor master
-void UI::outputMatrix(const std::vector< std::vector<Entries> >&, const int32_t, const int32_t){
-    
+void UI::outputMatrix(const std::vector< std::vector<Entries> >& M, const int32_t rows, const int32_t cols){
+    for (int i = 0 ; i < rows ; i++){
+        for (int j = 0 ; j < cols ; j++){
+            std::printf("%-15.3f ", M[i][j]);
+        }
+        cout << endl;
+    }
 }
 
-void UI::refactorMatrix(const std::vector< std::vector<Entries> >&, const int32_t, const int32_t){
-    
+void UI::refactorMatrix(const int32_t rows){
+    for (int i = 0 ; i < rows + 1 + m_errors; i++)
+        cout << UP_ONE_LINE DELETE_LINE;
 }
+
+void UI::refactorOther(){
+    for (int i = 0 ; i < m_errors + 1 ; i++)
+        cout << UP_ONE_LINE DELETE_LINE;
+}
+
+void UI::resetRead(){
+    m_prompt = true; m_errors = 0;
+}
+
+
 
 // *********
-// DIRECTORS
+// USER INPUT
 // *********
 
 // MASTER
 // ------
 
-void UI::matrixOperationPrompt(){
+void UI::handleUserInput(){
     cout << "*****************" << endl;
     cout << "MATRIX OPERATIONS" << endl;
     cout << "*****************" << endl << endl;
@@ -215,6 +235,11 @@ void UI::matrixOperationPrompt(){
     cout << "(2) AB = C" << endl << endl;
     
     cout << "Option: "; readInput(operation, NaM);
+    if (m_errors > 0){
+        refactorOther();
+        resetRead();
+        cout << "Option: " << m_operation << endl;
+    }
     cout << endl;
     switch(m_operation){
         case 0:
@@ -237,29 +262,57 @@ void UI::readScalarMult(){
     cout << "---------------------" << endl << endl;
     
     cout << "k = "; readInput(scalar, NaM);
+    if (m_errors > 0){
+        refactorOther();
+        resetRead();
+        cout << "k = " << m_k << endl;
+    }
     cout << endl;
     
     cout << "Matrix A" << endl;
     cout << "--------" << endl << endl;
     
-    int i = 1;
-    while (m_prompt){
-        cout << "Row " << i << ": "; readInput(matrix, A);
-    }
-    m_prompt = true;
-    
-    
+    readMatrix(A);
 }
 
 void UI::readMatrixAdd(){
+    cout << "Matrix Addition" << endl;
+    cout << "---------------" << endl << endl;
     
+    cout << "Matrix A" << endl;
+    cout << "--------" << endl << endl;
+    
+    readMatrix(A);
+    
+    
+    cout << "Matrix B" << endl;
+    cout << "--------" << endl << endl;
+    
+    readMatrix(B);
 }
 
 void UI::readMatrixMult(){
     
 }
 
-
+void UI::readMatrix(MatrixID ID){
+    for (int i = 1; m_prompt ; i++){
+        cout << "Row " << i << ": "; readInput(matrix, ID);
+    }
+    switch(ID){
+        case A:
+            refactorMatrix(m_rowsA);
+            outputMatrix(m_A, m_rowsA, m_colsA);
+            break;
+        case B:
+            refactorMatrix(m_rowsB);
+            outputMatrix(m_B, m_rowsB, m_colsB);
+            break;
+        case NaM:
+            break;
+    }
+    resetRead();
+}
 
 
 
