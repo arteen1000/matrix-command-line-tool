@@ -15,8 +15,21 @@ int main(){
     UI master;
 
     master.master();
-    
+
 }
+
+
+
+
+//#include <iostream>
+//int main(){
+//    bool hello = 0;
+//    bool bye = 1;
+//    if (hello)
+//        std::cout << "hello";
+//    else if (bye)
+//        std::cout << "bye";
+//}
 
 //
 //#include <iostream>

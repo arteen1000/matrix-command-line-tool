@@ -12,7 +12,7 @@
 #include <vector>
 
 // ensure correct input received
-enum InputType {operation, scalar, matrix};
+enum InputType {operation, scalar, matrix, yesno};
 
 // ensure parsing for correct matrix -> NaM = Not a Matrix
 enum MatrixID {A, B, NaM};
@@ -27,7 +27,7 @@ public:
     // ******
     
     // main control flow of program
-    void master();
+    bool master();
     
     // responsible for initializing any constructs
     UI();
@@ -101,29 +101,37 @@ protected:
     void readMatrixAdd();
     void readMatrixMult();
     
+    // fairly common functionality
+    void readMatrixAB();
+    
     // individual matrix read
     void readMatrix(MatrixID);
     
-    // ***************
+    // ************
     // VERIFICATION
-    // **************
+    // ************
     
-    // MASTER
-    // ------
-    
-    // verify operation possibility based on user input
+    // verify operation possibility based on user input && set dims of output
     bool verifyPossible();
     
-    // SLAVES
-    // ------
     
+    // **********
+    // ALLOCATION
+    // **********
     
-    
-    // set dims of necessary dependencies and allocate for size
+    // allocate output matrices
     void allocateDependencies();
+    
+    // ***********
+    // PERFORMANCE
+    // ***********
     
     // responsible for performing the m_operation
     void performOperation();
+    
+    // *******
+    // RE-INIT
+    // *******
     
     // responsible for resetting all constructs to default
     void reinitializeConstructs();
@@ -157,11 +165,17 @@ private:
     // matrix operations
     Matrix m_matrix;
     
-    // prompt?
+    // prompt another row
     bool m_prompt;
     
     // input errors
     int32_t m_errors;
+    
+    // yesno?
+    bool m_yesno;
+    
+    // how many ops performed
+    int32_t m_count;
 };
 
 #endif /* ui_hpp */

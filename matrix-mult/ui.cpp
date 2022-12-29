@@ -25,18 +25,24 @@ using std::vector;
 // ******
 
 // program control flow
-void UI::master(){
+bool UI::master(){
     
     handleUserInput();
-//    verifyPossible();
-//    allocateDependencies();
-//    performOperation();
-//    deallocateDependencies();
-//    reinitializeForNextCycle();
+    if (verifyPossible()){
+        allocateDependencies();
+        performOperation();
+    }
+    else {
+        cout << "Operation not possible with input dimensions." << endl << endl;
+    }
+    
+    cout << "Perform another operation (1) or exit program (0): "; readInput(yesno, NaM);
+    cout << endl; m_count++;
+    return m_yesno;
 }
 
 // initial requirements
-UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0), m_prompt(true) , m_errors(0){
+UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0), m_prompt(1) , m_errors(0), m_yesno(0), m_count(0){
 }
 
 // terminating message
@@ -62,6 +68,8 @@ void UI::readInput(const InputType inputType, const MatrixID matrixID){
 
 bool UI::isValidInput(const string& input, const InputType inputType){
     switch(inputType){
+        case yesno:
+            return input.find_first_not_of("01") == std::string::npos;
         case operation:
             return input.find_first_not_of("012") == std::string::npos;
         case scalar:
@@ -74,11 +82,17 @@ bool UI::isValidInput(const string& input, const InputType inputType){
 bool UI::otherInput(const std::string & input, const InputType inputType){
     if (inputType == matrix) return false;
     else if (inputType == operation){
-        if (input.empty()) return false;
+        if (input.empty() || input.size() > 1 ) return false;
         m_buffer = istringstream(input);
         m_buffer >> m_operation;
         return true;
-    } else return handleScalar(input);
+    } else if (inputType == scalar) return handleScalar(input);
+    else {
+        if (input.empty() || input.size() > 1) return false;
+        m_buffer = istringstream(input);
+        m_buffer >> m_yesno;
+        return true;
+    }
 }
 
 bool UI::handleScalar(const string& input){
@@ -111,6 +125,10 @@ bool UI::matrixInput(const string& input, const MatrixID matrixID){
     
     if (!validateMatrixInputFormat(input)) return false;
     
+    if (input.empty()){
+        m_prompt = false; return true;
+    }
+
     switch(matrixID){
         case A:
             return handleMatrixA(input);
@@ -152,10 +170,8 @@ bool UI::validateMatrixInputFormat(const string& input){
 // HANDLERS
 // ********
 
-bool UI::handleMatrixA(const string& input){    // as we input, have it return false if doesn't go to end of line (another input validation step)
-    if (input.empty()){
-        m_prompt = false; return true;
-    }
+bool UI::handleMatrixA(const string& input){
+    
     Entries value; m_buffer = istringstream(input);
     int cols = 0; vector<Entries> row; row.reserve(4);
     while (m_buffer >> value){
@@ -199,6 +215,7 @@ void UI::outputMatrix(const std::vector< std::vector<Entries> >& M, const int32_
         }
         cout << endl;
     }
+    cout << endl;
 }
 
 void UI::refactorMatrix(const int32_t rows){
@@ -271,7 +288,6 @@ void UI::readScalarMult(){
     
     cout << "Matrix A" << endl;
     cout << "--------" << endl << endl;
-    
     readMatrix(A);
 }
 
@@ -279,23 +295,27 @@ void UI::readMatrixAdd(){
     cout << "Matrix Addition" << endl;
     cout << "---------------" << endl << endl;
     
-    cout << "Matrix A" << endl;
-    cout << "--------" << endl << endl;
-    
-    readMatrix(A);
-    
-    
-    cout << "Matrix B" << endl;
-    cout << "--------" << endl << endl;
-    
-    readMatrix(B);
+    readMatrixAB();
 }
 
 void UI::readMatrixMult(){
+    cout << "Matrix Multiplication" << endl;
+    cout << "---------------" << endl << endl;
     
+    readMatrixAB();
+}
+
+void UI::readMatrixAB(){
+    cout << "Matrix A" << endl;
+    cout << "--------" << endl << endl;
+    readMatrix(A);
+    cout << "Matrix B" << endl;
+    cout << "--------" << endl << endl;
+    readMatrix(B);
 }
 
 void UI::readMatrix(MatrixID ID){
+    
     for (int i = 1; m_prompt ; i++){
         cout << "Row " << i << ": "; readInput(matrix, ID);
     }
@@ -315,8 +335,38 @@ void UI::readMatrix(MatrixID ID){
 }
 
 
+// ***************
+// VERIFICATION
+// **************
 
+// MASTER
+// ------
 
+// verify operation possibility based on user input && set dims of output
+bool UI::verifyPossible(){
+    switch(m_operation){
+        case 0:
+            return true;
+        case 1:
+            if (m_rowsA == m_rowsB && m_colsA == m_colsB) {
+                m_rowsC = m_rowsA;
+                m_colsC = m_colsA;
+                return true;
+            }
+            else return false;
+        case 2:
+            if (m_colsA == m_rowsB){
+                m_rowsC = m_rowsA;
+                m_colsC = m_colsB;
+                return true;
+            }
+            else return false;
+        default:
+            break;
+    }
+    
+    return false;
+}
 
 
 
