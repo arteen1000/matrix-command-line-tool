@@ -86,8 +86,6 @@ protected:
     // responsible for performing each respective operation
     void performOperation();
     
-    // deallocate any dependencies, including input matrices
-    void deallocateDependencies();
     
     // responsible for resetting all constructs to default
     void reinitializeForNextCycle();
@@ -107,9 +105,9 @@ private:
     int32_t m_colsC;
     
     // matrices
-    std::vector<std::vector<Entries>> m_A;
-    std::vector<std::vector<Entries>> m_B;
-    std::vector<std::vector<Entries>> m_C;
+    std::vector< std::vector<Entries> > m_A;
+    std::vector< std::vector<Entries> > m_B;
+    std::vector< std::vector<Entries> > m_C;
     
     // scalar
     int64_t m_k;

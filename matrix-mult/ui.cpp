@@ -50,7 +50,8 @@ void UI::coordinateInput(const InputType inputType, const MatrixID matrixID){
     string s; bool valid;
     do {
         getline(cin, s);
-        if (!(valid = isValidInput(s, inputType)) || !otherInput(s, inputType) || !matrixInput(s, matrixID)){
+//        cout << "bool status: " << isValidInput(s, inputType) << endl;
+        if (!(valid = isValidInput(s, inputType)) || (!otherInput(s, inputType) && !matrixInput(s, matrixID))){
             cout << "Invalid input. Try again: ";
         }
     } while (!valid);
@@ -62,13 +63,10 @@ bool UI::isValidInput(const string& input, const InputType inputType){
     switch(inputType){
         case operation:
             return input.find_first_not_of("0123") == std::string::npos;
-            break;
         case scalar:
             return input.find_first_not_of("0123456789-.") == std::string::npos;
-            break;
         case matrix:
             return input.find_first_not_of("0123456789-. ") == std::string::npos;
-            break;
     }
 }
 
@@ -113,8 +111,7 @@ bool UI::matrixInput(const string& input, const MatrixID matrixID){
         case B:
             return handleMatrixB(input);    // if (!m_buffer.eof()) return false;
         case NaM:
-            cout << "Cannot handle NaM" << endl;
-            exit(-1);
+            break;
     }
         
     return true;
@@ -146,11 +143,11 @@ bool UI::validateMatrixInputFormat(const string& input){
 // ************
 
 bool UI::handleMatrixA(const string& input){
-    return false;
+    return true;
 }
 
 bool UI::handleMatrixB(const string& input){
-    return false;
+    return true;
 }
 
 
@@ -173,11 +170,6 @@ void UI::allocateDependencies(){
 void UI::performOperation(){
     
 }
-
-void UI::deallocateDependencies(){
-    
-}
-
 
 void UI::reinitializeForNextCycle(){
     

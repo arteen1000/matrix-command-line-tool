@@ -12,33 +12,53 @@ using namespace std;
 
 
 
+int main(){
+    UI master;
+
+    while (1){
+        master.master();
+    }
+}
+
+
+
+
+// ****************
+// ESCAPE SEQUENCES
+//*****************
+//#include <iostream>
+//#define ESC_PREV_LINE "\033[A"
+//#define ESC_CLEAR_TO_END "\033[2K"    // exactly what I want
 //int main(){
-//    UI master;
-//
-//    while (1){
-//        master.master();
-//    }
-//}
+//    int i;
+//    std::cerr << "Some input to clear: " << std::flush;
+//    std:: cin >> i;
+//    std::cerr << ESC_PREV_LINE ESC_CLEAR_TO_END << std::flush;
+//}   // correct functionality in terminal (honestly, may be a good thing.)
 
-
-
-
-
-
-
-
-
-
-
+//#define ESC_PREV_LINE "\e[F" // \033[A
+//#define ESC_CLEAR_TO_END "\e[K" // \33[2K
+//  \r for carraige return
 
 
 // ***********
 // EXPERIMENTS
 // **********
 
-int main(){
-    cout << __cplusplus << endl;
-}
+//#include <unistd.h>
+//using namespace std;
+//int main(){
+//    cout << "Hello, I am not flushed.";
+//
+//    usleep(100000000);
+//
+//    cout << "Hello, I am being flushed." << flush;
+//}
+
+
+//int main(){
+//    cout << __cplusplus << endl;
+//}
 
 // testing basics of how input stream works
 // sets 'int' or 'double' to 0 when conversion from buffer fails
