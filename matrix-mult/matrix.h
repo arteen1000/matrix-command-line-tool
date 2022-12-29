@@ -15,11 +15,10 @@ public:
     // ***************
     
     // static
-    std::vector< std::vector<Entries> > createMatrix(const int, const int);
+    std::vector< std::vector<Entries> > createMatrix(const int32_t, const int32_t);
     
     // dynamic
-    // return false if row size inconsistent with col size
-    bool addRow(std::vector< std::vector<Entries> >&, std::istringstream&, int&, const int);
+    void addRow(std::vector<std::vector<Entries>>&, std::vector<Entries>&);
     
     // ****************************************************
     // OPERATORS (return nullptr if operation not possible)

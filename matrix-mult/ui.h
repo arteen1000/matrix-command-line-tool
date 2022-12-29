@@ -43,31 +43,35 @@ protected:
     // read input from the user & coordinate destination
     void coordinateInput(const InputType, const MatrixID);
 
-    // general input validator for readInput()
+    // valid input characters fit required scheme
     bool isValidInput(const std::string&, const InputType);
     
-    // input destination coordinator for non-matrix inputs
+    // validate & coordinate non-matrix input
     bool otherInput(const std::string&, const InputType);
     
-    // if (scalar input of correct form) set scalar; else return false;
-    bool handleScalar(const std::string&);
-    
-    // matrix input validator for isValidInput() & coordinator
+    // validate & coordinate matrix input
     bool matrixInput(const std::string&, const MatrixID);
     
-    // handle form-checking for matrixInput()
-    // white-space de-limitted numerical values
+    // ensure matrix input is white-space de-limitted numerical values
     bool validateMatrixInputFormat(const std::string&);
     
-    // ************
-    // DIM-HANDLERS
-    // ************
+    // ********
+    // HANDLERS
+    // ********
     
-    // handle dim-setting & updating for parseInput()
-    // ensure can enter input into matrix without bufer failing
-    // for dynamic matrices
+    // handle validating & inputting m_k
+    bool handleScalar(const std::string&);
+    
+    // handle additional type validation & allocating input into dynamic matrices
     bool handleMatrixA(const std::string&);
     bool handleMatrixB(const std::string&);
+    
+    // *****************
+    // OPERATION VERIFIER
+    // *****************
+    
+    // verify operation possibility based on current user input
+    bool verifyOperations();
     
     // *********
     // DIRECTORS
@@ -77,19 +81,24 @@ protected:
     // have sub-handlers handle each select operation
     void matrixOperationPrompt();
     
-    // verify the operation is possible with user selections
-    // input will be valid but not necessarily compatible
-    void verifyOperationPossible();
-    
-    // set dimension of any dependencies and allocate them
+    // set dims of necessary dependencies and allocate for size
     void allocateDependencies();
     
-    // responsible for performing each respective operation
+    // responsible for performing the m_operation
     void performOperation();
     
-    
     // responsible for resetting all constructs to default
-    void reinitializeForNextCycle();
+    void reinitializeConstructs();
+    
+    
+    // idea: format matrix C output nicely by taking a look at the largest row size and adjusting the rest with spaces for it? I love this idea. If there's decimals, maybe go as far as lining up above correct decimal point?
+    // very difficult to implement
+    
+    // *******
+    // DEBUG
+    // ******
+    
+    void outputMatrixA();
     
 private:
     // used to handle input allocation
@@ -116,6 +125,8 @@ private:
     // operation code
     int32_t m_operation;
     
+    // matrix operations
+    Matrix m_matrix;
 };
 
 #endif /* ui_hpp */

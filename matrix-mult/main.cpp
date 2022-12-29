@@ -2,27 +2,62 @@
 //  main.cpp
 //  matrix-mult
 
+//#include <iostream>
+//#include <sstream>
+//#include "ui.h"
+
+
+
+
+
+
+//int main(){
+//    UI master;
+//
+//    while (1){
+//        master.master();
+//    }
+//}
+
+
 #include <iostream>
+#include <stdio.h>
 #include <sstream>
-#include "ui.h"
+#include <vector>
 using namespace std;
 
-
-
-
-
-
 int main(){
-    UI master;
 
-    while (1){
-        master.master();
+    vector<vector<double>> A;
+    vector<double> row1 = {200.3, 100.7, 400.89};
+    vector<double> row2 = {-323.34, 416.85, 123.345};
+    vector<double> row3 = {43.3, 5, 6};
+    A.push_back(std::move(row1));
+    A.push_back(std::move(row2));
+    A.push_back(std::move(row3));
+
+    size_t rows = A.size();
+    size_t cols = A[0].size();
+    for (int i = 0 ; i < rows ; i ++){
+        for (int j = 0 ; j < cols ; j ++){
+            printf("%-15.3f ", A[i][j]);      // the most beautiful output
+            // X (total length it can best format) = Y (decimal precision) + . <- guaranteed to exist
+            //                                      + # of digits or -     <- variable
+            // so 7.3f can rep 7 total chars, 4 of which are guaranteed to exist
+            // %X.Yf
+        }
+        cout << std::endl;
     }
+    
+//    printf ("Right align: %7d\n", 5);
+//    printf ("Left align : %-7d\n", 5);
+
 }
 
-
-
-
+//int main(){
+//    double i = 0.3;
+//    std::cout << i;
+//}
 
 
 

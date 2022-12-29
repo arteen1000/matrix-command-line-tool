@@ -24,7 +24,6 @@ using std::vector;
 // program control flow
 void UI::master(){
     
-    coordinateInput(matrix, A);
 //    matrixOperationPrompt();
 //    verifyOperationPossible();
 //    allocateDependencies();
@@ -34,7 +33,7 @@ void UI::master(){
 }
 
 // initial requirements
-UI::UI() : m_rowsA(1 << 31), m_colsA(1 << 31), m_rowsB(1 << 31), m_colsB(1 << 31), m_rowsC(1 << 31), m_colsC(1 << 31) {
+UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0) {
 }
 
 // terminating message
@@ -152,18 +151,45 @@ bool UI::validateMatrixInputFormat(const string& input){
 // DIM-HANDLERS
 // ************
 
+void UI::outputMatrixA(){
+    
+    for (int i = 0 ; i < m_rowsA ; i++){
+        for (int j = 0 ; j < m_colsA ; j++){
+            cout << m_A[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
 bool UI::handleMatrixA(const string& input){    // as we input, have it return false if doesn't go to end of line (another input validation step)
-    Entries test;
-    m_buffer = istringstream(input);
-    int cols = 0; vector<Entries> row;
-    while (m_buffer >> test){
+    Entries value; m_buffer = istringstream(input);
+    int cols = 0; vector<Entries> row; row.reserve(4);
+    while (m_buffer >> value){
         cols++;
+        row.push_back(value);
     }
     if (!m_buffer.eof()) return false;
+    if (m_colsA == 1 << 31) m_colsA = cols;
+    else if (cols != m_colsA) return false;
+    
+    m_matrix.addRow(m_A, row); m_rowsA++;
+    
     return true;
 }
 
 bool UI::handleMatrixB(const string& input){
+    Entries value; m_buffer = istringstream(input);
+    int cols = 0; vector<Entries> row; row.reserve(4);
+    while (m_buffer >> value){
+        cols++;
+        row.push_back(value);
+    }
+    if (!m_buffer.eof()) return false;
+    if (m_colsB == 1 << 31) m_colsB = cols;
+    else if (cols != m_colsB) return false;
+    
+    m_matrix.addRow(m_B, row); m_rowsB++;
+    
     return true;
 }
 
@@ -176,10 +202,6 @@ void UI::matrixOperationPrompt(){
     
 }
 
-void UI::verifyOperationPossible(){
-    
-}
-
 void UI::allocateDependencies(){
     
 }
@@ -188,7 +210,7 @@ void UI::performOperation(){
     
 }
 
-void UI::reinitializeForNextCycle(){
+void UI::reinitializeConstructs(){
     
 }
 

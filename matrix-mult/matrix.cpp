@@ -3,19 +3,18 @@
 //  matrix-mult
 
 #include "matrix.h"
-
-#include "matrix.h"
+#include <vector>
 
 // ***************
 // CREATE MATRICES
 // ***************
 
-std::vector<std::vector<Entries>> createMatrix(const int rows, const int cols){
+std::vector<std::vector<Entries>> Matrix::createMatrix(const int rows, const int cols){
     return {};
 }
 
-bool addRow(std::vector<std::vector<Entries>>&, std::istringstream&, int&, const int){
-    return false;
+void Matrix::addRow(std::vector<std::vector<Entries>>& matrix, std::vector<Entries>& row) {
+    matrix.push_back(std::move(row));
 }
 
 // ****************************************************
