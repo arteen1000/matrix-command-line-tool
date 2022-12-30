@@ -60,15 +60,15 @@ UI::~UI(){
     if (m_count < 10){
         cout << ". Single digits, you could do better." << endl;
     } else if (m_count < 20){
-        cout << "...double digits...getting better." << endl;
+        cout << "...double digits...getting better, but not good enough." << endl;
     } else if (m_count < 30){
-        cout << ". You must love this program. You're welcome." << endl;
+        cout << ". Almost there. You can make it." << endl;
     } else if (m_count < 40){
-        cout << ". Perhaps it's good to take a break?" << endl;
+        cout << ". Keep going, I swear there's a prize for this." << endl;
     } else if (m_count < 50) {
-        cout << ". Definitely go take a break." << endl;
+        cout << ". C'mon, you can make it." << endl;
     } else {
-        cout << ". Please go get some fresh air." << endl;
+        cout << ". Almost there..." << endl;
     }
 }
 
