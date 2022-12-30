@@ -99,6 +99,7 @@ bool UI::isValidInput(const string& input, const InputType inputType){
         case matrix:
             return input.find_first_not_of("0123456789-. ") == std::string::npos;
     }
+    return false;
 }
 
 bool UI::otherInput(const std::string & input, const InputType inputType){
@@ -431,13 +432,13 @@ void UI::deallocateDependencies(){
 void UI::performOperation(){
     switch(m_operation){
         case 0:
-            m_Matrix.performScalarMultiply(m_k, m_A, m_C, m_rowsC, m_colsC);
+            m_ops.performScalarMultiply(m_k, m_A, m_C, m_rowsC, m_colsC);
             break;
         case 1:
-            m_Matrix.performMatrixAddition(m_A, m_B, m_C, m_rowsC, m_colsC);
+            m_ops.performMatrixAddition(m_A, m_B, m_C, m_rowsC, m_colsC);
             break;
         case 2:
-            m_Matrix.performMatrixMultiply(m_A, m_B, m_C, m_rowsC, m_colsA, m_colsC);
+            m_ops.performMatrixMultiply(m_A, m_B, m_C, m_rowsC, m_colsA, m_colsC);
             break;
         default:
             break;

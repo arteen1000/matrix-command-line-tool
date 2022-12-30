@@ -10,7 +10,7 @@ using std::vector;
 // OPERATIONS
 // **********
 
-void Matrix::performScalarMultiply(const Entries k, const vector< vector<Entries> >& A, Entries* C, const int32_t rows, const int32_t cols){
+void MatrixOps::performScalarMultiply(const Entries k, const vector< vector<Entries> >& A, Entries* C, const int32_t rows, const int32_t cols){
     
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
@@ -19,7 +19,7 @@ void Matrix::performScalarMultiply(const Entries k, const vector< vector<Entries
     }
 }
 
-void Matrix::performMatrixAddition(const vector< vector<Entries> >& A, const vector< vector<Entries> >& B, Entries* C, const int32_t rows, const int32_t cols){
+void MatrixOps::performMatrixAddition(const vector< vector<Entries> >& A, const vector< vector<Entries> >& B, Entries* C, const int32_t rows, const int32_t cols){
     
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
@@ -27,8 +27,9 @@ void Matrix::performMatrixAddition(const vector< vector<Entries> >& A, const vec
         }
     }
 }
+// equal dims
 
-void Matrix::performMatrixMultiply(const std::vector< std::vector<Entries> >& A, const std::vector< std::vector<Entries> >& B, Entries* C, const int32_t rowsAC, const int32_t colsA_rowsB, const int32_t colsBC){
+void MatrixOps::performMatrixMultiply(const std::vector< std::vector<Entries> >& A, const std::vector< std::vector<Entries> >& B, Entries* C, const int32_t rowsAC, const int32_t colsA_rowsB, const int32_t colsBC){
     Entries placeholder = 0;
     // can tile here
     for (int i = 0 ; i < rowsAC; i++){
@@ -44,10 +45,31 @@ void Matrix::performMatrixMultiply(const std::vector< std::vector<Entries> >& A,
  rowsA = rowsC
  colsA = rowsB
  colsC = colsB
+ 
+ C[ij] = A[ik] * B[kj]; // ith row of A * jth col of B -> intuitive ordering (how I do it in my head) would be i j k, not cache efficient
 */
 
-
-
+Entries MatrixOps::performDeterminant(const std::vector<std::vector<Entries>> & A, const int32_t n){
+    if (1 == n) return A[0][0];
+    if (2 == n) return ((A[0][0] * A[1][1]) - (A[0][1] * A[1][0]));
+    
+    Entries determinant = 0.0;
+    vector<Entries> firstRow = A[0];
+    
+    return determinant;
+}
+/*
+ square matrix
+ cofactor expansion
+ (-1)^i+j * det(the other columns and rows)
+ 
+ algorithm, recursive:
+ 1 or 2 -> return base determin
+ 
+ // for every element in row 1
+ // start positive and alternate
+ // determinant of the cofactor
+ */
 
 
 

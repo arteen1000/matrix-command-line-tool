@@ -8,7 +8,7 @@
 #include <vector>
 typedef double Entries;
 
-class Matrix{
+class MatrixOps{
 public:
     // **********
     // OPERATIONS
@@ -17,6 +17,8 @@ public:
     void performScalarMultiply(const Entries, const std::vector< std::vector<Entries> >& A, Entries*, const int32_t, const int32_t);
     void performMatrixAddition(const std::vector< std::vector<Entries> >&, const std::vector< std::vector<Entries> >&, Entries*, const int32_t, const int32_t);
     void performMatrixMultiply(const std::vector< std::vector<Entries> >&, const std::vector< std::vector<Entries> >&, Entries*, const int32_t, const int32_t, const int32_t);
+    
+    Entries performDeterminant(const std::vector< std::vector<Entries> >&, int32_t);
     
 //    int performDeterminant(Entries*, int, int){return -1;}
 };

@@ -185,7 +185,7 @@ private:
     int32_t m_operation;
     
     // matrix operations
-    Matrix m_Matrix;
+    MatrixOps m_ops;
     
     // prompt another row
     bool m_prompt;
