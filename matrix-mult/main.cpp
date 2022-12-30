@@ -14,11 +14,43 @@
 int main(){
     UI master;
 
-    master.master();
+    while (master.master());
 
 }
 
 
+
+
+
+
+//#include <iostream>
+//int main(){
+//    bool yesno = true;
+//    std::string s; std::istringstream buffer;
+//    while (yesno){
+//        std::getline(std::cin, s);
+//        buffer = std::istringstream(s);
+//        buffer >> yesno;
+//    }
+//}
+
+//
+//#include <iostream>
+//using std::cout;
+//int main(){
+//    double array[3]; double test = 5.;
+//    std::string s("1.2 1. -.5");    // valid double formats
+//    std::istringstream buffer(s);
+//
+//    int i = 0;
+//    while (buffer >> test){
+//        array[i] = test;
+//        i++;
+//    }
+//
+//    for (double i : array) cout << i << " ";
+//    cout << "\n";
+//}
 
 
 //#include <iostream>

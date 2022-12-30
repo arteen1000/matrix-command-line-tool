@@ -4,62 +4,60 @@
 
 #include "matrix.h"
 #include <vector>
+using std::vector;
 
-// ***************
-// CREATE MATRICES
-// ***************
+// **********
+// OPERATIONS
+// **********
 
-std::vector<std::vector<Entries>> Matrix::createMatrix(const int rows, const int cols){
-    return {};
-}
-
-void Matrix::addRow(std::vector<std::vector<Entries>>& matrix, std::vector<Entries>& row) {
-    matrix.push_back(std::move(row));
-}
-
-// ****************************************************
-// OPERATORS (return nullptr if operation not possible)
-// ****************************************************
-
-void Matrix::performScalarMultiply(Entries k, Entries* A, Entries* C, int rows, int cols){
+void Matrix::performScalarMultiply(const Entries k, const vector< vector<Entries> >& A, Entries* C, const int32_t rows, const int32_t cols){
     
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
-            C[i*cols + j] = A[i*cols + j] * k;
+            C[i*cols + j] = A[i][j] * k;
         }
     }
 }
 
-void Matrix::performMatrixAddition(Entries* A, Entries* B, Entries* C, int rows, int cols){
+void Matrix::performMatrixAddition(const vector< vector<Entries> >& A, const vector< vector<Entries> >& B, Entries* C, const int32_t rows, const int32_t cols){
     
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
-            C[i*cols + j] = A[i*cols + j] + B[i*cols +j];
+            C[i*cols + j] = A[i][j] + B[i][j];
         }
     }
 }
 
-void Matrix::performMatrixMultiply(Entries* A, Entries* B, Entries* C , int rowsA_rowsC, int colsA_rowsB, int colsB_colsC){
-    
+void Matrix::performMatrixMultiply(const std::vector< std::vector<Entries> >& A, const std::vector< std::vector<Entries> >& B, Entries* C, const int32_t rowsAC, const int32_t colsA_rowsB, const int32_t colsBC){
     Entries placeholder = 0;
     // can tile here
-    for (int i = 0 ; i < rowsA_rowsC; i++){
+    for (int i = 0 ; i < rowsAC; i++){
         for (int k = 0 ; k < colsA_rowsB; k++){
-            placeholder = A[i*colsA_rowsB + k];
-            for (int j = 0 ; j < colsB_colsC; j++){
-                C[i*colsB_colsC + j] += placeholder * B[k*colsB_colsC + j];
+            placeholder = A[i][k];
+            for (int j = 0 ; j < colsBC; j++){
+                C[i*colsBC + j] += placeholder * B[k][j];
             }
         }
     }
-         
-         
 }
-
 /*
  rowsA = rowsC
  colsA = rowsB
  colsC = colsB
 */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -71,8 +71,11 @@ protected:
     // OUTPUT && REFACTOR
     // ******************
     
-    // output matrix
+    // output input matrices
     void outputMatrix(const std::vector< std::vector<Entries> >&, const int32_t, const int32_t);
+    
+    // output output matrices
+    void outputMatrix(const Entries* M, const int32_t rows, const int32_t cols);
     
     // delete inputted matrix presentation
     void refactorMatrix(const int32_t);
@@ -122,12 +125,27 @@ protected:
     // allocate output matrices
     void allocateDependencies();
     
-    // ***********
-    // PERFORMANCE
-    // ***********
+    // ****************
+    // OPERATION OUTPUT
+    // ****************
     
-    // responsible for performing the m_operation
+    // MASTER
+    // ------
+    
+    // responsible for performing the m_operation && displaying result to user
     void performOperation();
+    
+    // SLAVES
+    // ------
+    
+    void outputMatrixC();
+    
+    // *************
+    // DE-ALLOCATION
+    // *************
+    
+    // deallocate output matrices
+    void deallocateDependencies();
     
     // *******
     // RE-INIT
@@ -152,18 +170,22 @@ private:
     int32_t m_colsC;
     
     // matrices
+    
+    // user input based
     std::vector< std::vector<Entries> > m_A;
     std::vector< std::vector<Entries> > m_B;
-    std::vector< std::vector<Entries> > m_C;
+    
+    // based on A and B (allocated after user input)
+    Entries* m_C;
     
     // scalar
-    double m_k;
+    Entries m_k;
     
     // operation code
     int32_t m_operation;
     
     // matrix operations
-    Matrix m_matrix;
+    Matrix m_Matrix;
     
     // prompt another row
     bool m_prompt;

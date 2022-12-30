@@ -31,23 +31,45 @@ bool UI::master(){
     if (verifyPossible()){
         allocateDependencies();
         performOperation();
+        deallocateDependencies();
     }
     else {
         cout << "Operation not possible with input dimensions." << endl << endl;
     }
     
-    cout << "Perform another operation (1) or exit program (0): "; readInput(yesno, NaM);
-    cout << endl; m_count++;
+    cout << endl << "Perform another operation (1) or exit program (0): "; readInput(yesno, NaM);
+    m_count++;
+    
+    if (m_yesno) reinitializeConstructs();
     return m_yesno;
 }
 
 // initial requirements
 UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0), m_prompt(1) , m_errors(0), m_yesno(0), m_count(0){
+    m_C = nullptr;
+    m_A.reserve(4);
+    m_B.reserve(4);
 }
 
 // terminating message
 UI::~UI(){
+    string s = "operation";
+    if (m_count > 1) s += 's';
+    cout << "You performed " << m_count << " " << s;
     
+    if (m_count < 10){
+        cout << ". Single digits, you could do better." << endl;
+    } else if (m_count < 20){
+        cout << "...double digits...getting better." << endl;
+    } else if (m_count < 30){
+        cout << ". You must love this program. You're welcome." << endl;
+    } else if (m_count < 40){
+        cout << ". Perhaps it's good to take a break?" << endl;
+    } else if (m_count < 50) {
+        cout << ". Definitely go take a break." << endl;
+    } else {
+        cout << ". Please go get some fresh air." << endl;
+    }
 }
 
 
@@ -182,7 +204,7 @@ bool UI::handleMatrixA(const string& input){
     if (m_colsA == 1 << 31) m_colsA = cols;
     else if (cols != m_colsA) return false;
     
-    m_matrix.addRow(m_A, row); m_rowsA++;
+    m_A.push_back(std::move(row)); m_rowsA++;
     
     return true;
 }
@@ -198,7 +220,7 @@ bool UI::handleMatrixB(const string& input){
     if (m_colsB == 1 << 31) m_colsB = cols;
     else if (cols != m_colsB) return false;
     
-    m_matrix.addRow(m_B, row); m_rowsB++;
+    m_B.push_back(std::move(row)); m_rowsB++;
     
     return true;
 }
@@ -208,10 +230,23 @@ bool UI::handleMatrixB(const string& input){
 // ******************
 
 // output & refactor master
+
+// user input
 void UI::outputMatrix(const std::vector< std::vector<Entries> >& M, const int32_t rows, const int32_t cols){
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
             std::printf("%-15.3f ", M[i][j]);
+        }
+        cout << endl;
+    }
+    cout << endl;
+}
+
+// output
+void UI::outputMatrix(const Entries* M, const int32_t rows, const int32_t cols){
+    for (int i = 0 ; i < rows ; i++){
+        for (int j = 0 ; j < cols ; j++){
+            std::printf("%-15.3f ", M[i*cols+j]);
         }
         cout << endl;
     }
@@ -242,7 +277,7 @@ void UI::resetRead(){
 // ------
 
 void UI::handleUserInput(){
-    cout << "*****************" << endl;
+    cout << endl << "*****************" << endl;
     cout << "MATRIX OPERATIONS" << endl;
     cout << "*****************" << endl << endl;
     
@@ -339,13 +374,13 @@ void UI::readMatrix(MatrixID ID){
 // VERIFICATION
 // **************
 
-// MASTER
-// ------
 
 // verify operation possibility based on user input && set dims of output
 bool UI::verifyPossible(){
     switch(m_operation){
         case 0:
+            m_rowsC = m_rowsA;
+            m_colsC = m_colsA;
             return true;
         case 1:
             if (m_rowsA == m_rowsB && m_colsA == m_colsB) {
@@ -369,18 +404,77 @@ bool UI::verifyPossible(){
 }
 
 
+// **********
+// ALLOCATION
+// **********
 
-
+// reserve C
 void UI::allocateDependencies(){
-    
+    m_C = new Entries[m_rowsC * m_colsC];
 }
+
+// *************
+// DE-ALLOCATION
+// *************
+
+void UI::deallocateDependencies(){
+    delete [] m_C;
+}
+
+// ****************
+// OPERATION OUTPUT
+// ****************
+
+// MASTER
+// ------
 
 void UI::performOperation(){
+    switch(m_operation){
+        case 0:
+            m_Matrix.performScalarMultiply(m_k, m_A, m_C, m_rowsC, m_colsC);
+            break;
+        case 1:
+            m_Matrix.performMatrixAddition(m_A, m_B, m_C, m_rowsC, m_colsC);
+            break;
+        case 2:
+            m_Matrix.performMatrixMultiply(m_A, m_B, m_C, m_rowsC, m_colsA, m_colsC);
+            break;
+        default:
+            break;
+    }
+    
+    switch(m_operation){
+        case 0:
+        case 1:
+        case 2:
+            outputMatrixC();
+            break;
+        default:
+            break;
+    }
     
 }
 
-void UI::reinitializeConstructs(){
+// SLAVES
+// ------
+
+void UI::outputMatrixC(){
+    cout << "Matrix C" << endl;
+    cout << "--------" << endl << endl;
     
+    outputMatrix(m_C, m_rowsC, m_colsC);
+}
+
+
+// *******
+// RE-INIT
+// *******
+void UI::reinitializeConstructs(){
+    m_rowsA = 0; m_colsA = 1 << 31; m_rowsB = 0; m_colsB = 1 << 31;
+    m_rowsC = 0; m_colsC = 0; m_prompt = 1; m_errors = 0;
+    m_C = nullptr;
+    m_A = vector<vector<Entries>>(); m_A.reserve(4);
+    m_B = vector<vector<Entries>>(); m_B.reserve(4);
 }
 
 
