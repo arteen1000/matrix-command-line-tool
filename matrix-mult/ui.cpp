@@ -8,7 +8,9 @@
 #include <iostream>
 #include <cctype>
 #include <vector>
+#include <cstdint>
 
+using std::int32_t;
 using std::string;
 using std::istringstream;
 using std::cin;
@@ -28,8 +30,8 @@ using std::vector;
 bool UI::master(){
     
     handleUserInput();
-    bool verified;
-    if ((verified = verifyPossibleAndSetDims())){
+    bool performed;
+    if ((performed = verifyPossibleAndSetDims())){
 //        allocateDependencies();
         performOperationAndOutput();
     }
@@ -38,23 +40,27 @@ bool UI::master(){
     }
     
     cout << endl << "Perform another operation (1) or exit program (0): "; readInput(onezero, NaM);
+    refactorOther();
+    cout << "Perform another operation (1) or exit program (0): " << m_continue;
     m_count++;
     
-    if (m_continue && verified) {
+    if (m_continue) {
         switch(m_operation){
             case 0:
             case 1:
             case 2:
-                cout << "Save C into B? (Y/n) "; readInput(yesno, NaM);
-                refactorOther();
-                cout << "Save C into B? " << m_yesno << endl;
-                break;
+                if (performed) {
+                    cout << "Save C into B? (Y/n) "; readInput(yesno, NaM);
+                    refactorOther();
+                    cout << "Save C into B? " << m_yesno << endl;
+                    break;
+                }
             case 3:
-                m_saved = 0;    // unsave as just took det(B), unlikely still need.
+                m_saved = 0;    // unsave as just took det(B) or didn't perf op
                 break;
         }
-        reinitializeConstructs();
     }
+    reinitializeConstructs();
     return m_continue;
 }
 

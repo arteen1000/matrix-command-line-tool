@@ -6,6 +6,9 @@
 #define matrix_h
 
 #include <vector>
+#include <cstdint>
+using std::int32_t;
+
 typedef double Entries;
 
 class MatrixOps{

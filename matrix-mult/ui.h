@@ -11,6 +11,8 @@
 #include <sstream>
 #include <vector>
 #include <string>
+#include <cstdint>
+using std::int32_t;
 
 // ensure correct input received
 enum InputType {operation, scalar, matrix, onezero, yesno};

@@ -4,6 +4,8 @@
 
 #include "matrix.h"
 #include <vector>
+#include <cstdint>
+using std::int32_t;
 using std::vector;
 
 
