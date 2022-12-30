@@ -22,8 +22,22 @@ As of right now, it can perform the following operations, with more coming soon:
 
 - I think that's all, and I really doubt you'll have trouble using this, but if you do, you have my email, and I'll be happy to either (a) provide guidance or (b) adjust the program to suit your needs.
 
+- Also, I don't think this'll come up, but if you have a terminal that doesn't support ANSI/VT100 escape sequences, you might run into some wonky output. Email me at arteen1000@gmail and I'll try to help resolve.
+
 ## setting up the program
 
 Run these steps, in the order provided, in your terminal, and you'll be good to go:
 
--
+- `git clone https://github.com/arteen1000/matrix-command-line-tool.git matrix-clt`
+- `cd matrix-clt/matrix-mult`
+- `./compile.sh`
+
+At this point, you'll have an executable file called called `matrix` that you can run at any time using `./matrix`.
+
+If I were you, at this point I would run:
+
+- `mv matrix path/to/your/directory/you/would/like/it/in`
+- `cd ../..`
+- `rm -rf matrix-clt`
+
+and you'll just have the executable in `path/to/your/directory/you/would/like/it/in`, with no source code bloat :)
