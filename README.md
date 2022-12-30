@@ -18,7 +18,7 @@ As of right now, it can perform the following operations, with more coming soon:
 
 - The program will accept input of the forms `X.X`, `.X`, `-X.X`, `-.X`, but not `X.` or `-X.`. If you would seriously like to format your input in this way, you can file a complaint at arteen1000@gmail.com.
 
-- Please note that matrices cannot have a different number of entries in each row ... i.e, once you choose a certain number of columns, stick with it. The program won't let you input if it doesn't match your initial rows number of columns.
+- Please note that matrices cannot have a different number of entries in each row ... i.e, once you choose a certain number of columns, stick with it. The program won't let you input if it doesn't match your initial row's number of columns.
 
 - I think that's all, and I really doubt you'll have trouble using this, but if you do, you have my email, and I'll be happy to either (a) provide guidance or (b) adjust the program to suit your needs.
 
