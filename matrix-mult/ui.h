@@ -72,7 +72,7 @@ protected:
     // ******************
     
     // output input matrices
-    void outputMatrix(const std::vector< std::vector<Entries> >&, const int32_t, const int32_t);
+    void outputMatrix(const std::vector< Entries >&, const int32_t, const int32_t);
     
     // output output matrices
     void outputMatrix(const Entries* M, const int32_t rows, const int32_t cols);
@@ -172,8 +172,8 @@ private:
     // matrices
     
     // user input based
-    std::vector< std::vector<Entries> > m_A;
-    std::vector< std::vector<Entries> > m_B;
+    std::vector< Entries > m_A;
+    std::vector< Entries > m_B;
     
     // based on A and B (allocated after user input)
     Entries* m_C;

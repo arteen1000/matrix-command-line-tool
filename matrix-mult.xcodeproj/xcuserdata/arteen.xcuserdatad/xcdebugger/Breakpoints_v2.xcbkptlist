@@ -14,8 +14,8 @@
             filePath = "matrix-mult/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "272"
-            endingLineNumber = "272"
+            startingLineNumber = "271"
+            endingLineNumber = "271"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -78,8 +78,8 @@
             filePath = "matrix-mult/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "103"
-            endingLineNumber = "103"
+            startingLineNumber = "102"
+            endingLineNumber = "102"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -94,8 +94,8 @@
             filePath = "matrix-mult/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "unknown"
             landmarkType = "0">
          </BreakpointContent>
@@ -110,9 +110,9 @@
             filePath = "matrix-mult/ui.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "290"
-            endingLineNumber = "290"
-            landmarkName = "UI::handleUserInput()"
+            startingLineNumber = "301"
+            endingLineNumber = "301"
+            landmarkName = "UI::outputMatrix(M, rows, cols)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -126,9 +126,9 @@
             filePath = "matrix-mult/ui.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "317"
-            endingLineNumber = "317"
-            landmarkName = "UI::readScalarMult()"
+            startingLineNumber = "328"
+            endingLineNumber = "328"
+            landmarkName = "UI::outputMatrix(M, rows, cols)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -238,9 +238,9 @@
             filePath = "matrix-mult/ui.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "380"
-            endingLineNumber = "380"
-            landmarkName = "UI::verifyPossible()"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
+            landmarkName = "UI::outputMatrix(M, rows, cols)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -254,8 +254,24 @@
             filePath = "matrix-mult/main.cpp"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
+            landmarkName = "main()"
+            landmarkType = "9">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "3E879466-25C2-403A-8EA0-1842AFFA64D2"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "matrix-mult/main.cpp"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "35"
+            endingLineNumber = "35"
             landmarkName = "main()"
             landmarkType = "9">
          </BreakpointContent>

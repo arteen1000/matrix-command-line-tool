@@ -47,8 +47,8 @@ bool UI::master(){
 // initial requirements
 UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0), m_prompt(1) , m_errors(0), m_yesno(0), m_count(0){
     m_C = nullptr;
-    m_A.reserve(4);
-    m_B.reserve(4);
+    m_A.reserve(16);
+    m_B.reserve(16);
 }
 
 // terminating message
@@ -205,7 +205,13 @@ bool UI::handleMatrixA(const string& input){
     if (m_colsA == 1 << 31) m_colsA = cols;
     else if (cols != m_colsA) return false;
     
-    m_A.push_back(std::move(row)); m_rowsA++;
+    if (m_A.empty()){
+        m_A = std::move(row);
+    } else {
+        m_A.reserve(m_rowsA*m_colsA + m_colsA);
+        m_A.insert(m_A.end(), row.begin(), row.end());
+    }
+    m_rowsA++;
     
     return true;
 }
@@ -221,7 +227,12 @@ bool UI::handleMatrixB(const string& input){
     if (m_colsB == 1 << 31) m_colsB = cols;
     else if (cols != m_colsB) return false;
     
-    m_B.push_back(std::move(row)); m_rowsB++;
+    if (m_B.empty()){
+        m_B = std::move(row);
+    } else {
+        m_B.reserve(m_rowsB*m_colsB + m_colsB);
+        m_B.insert(m_B.end(), row.begin(), row.end());
+    } m_rowsB++;
     
     return true;
 }
@@ -233,10 +244,10 @@ bool UI::handleMatrixB(const string& input){
 // output & refactor master
 
 // user input
-void UI::outputMatrix(const std::vector< std::vector<Entries> >& M, const int32_t rows, const int32_t cols){
+void UI::outputMatrix(const std::vector< Entries >& M, const int32_t rows, const int32_t cols){
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
-            std::printf("%-15.3f ", M[i][j]);
+            std::printf("%-15.3f ", M[i*cols + j]);
         }
         cout << endl;
     }
@@ -474,8 +485,8 @@ void UI::reinitializeConstructs(){
     m_rowsA = 0; m_colsA = 1 << 31; m_rowsB = 0; m_colsB = 1 << 31;
     m_rowsC = 0; m_colsC = 0; m_prompt = 1; m_errors = 0;
     m_C = nullptr;
-    m_A = vector<vector<Entries>>(); m_A.reserve(4);
-    m_B = vector<vector<Entries>>(); m_B.reserve(4);
+    m_A = vector<Entries>(); m_A.reserve(16);
+    m_B = vector<Entries>(); m_B.reserve(16);
 }
 
 

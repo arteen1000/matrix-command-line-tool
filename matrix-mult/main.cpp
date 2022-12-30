@@ -11,38 +11,37 @@
 
 
 
-//int main(){
-//    UI master;
-//
-//    while (master.master());
-//
-//}
-
-#include <vector>
-#include <iostream>
-using std::vector;
-
 int main(){
-    MatrixOps ops;
-    vector<vector<Entries>> A; A.reserve(3);
-    
-    vector<Entries> row1 = {0, 0, 5};
-    vector<Entries> row2 = {0, -3, 0};
-    vector<Entries> row3 = {1.5, 0, 0};
-    
-    vector<Entries>* ptr;
-    
-    A.push_back(row1); A.push_back(std::move(row2)); A.push_back(row3);
-    
-    for (int i = 0 ; i < 3 ; i++){
-        for (int j = 0 ; j < 3 ; j++){
-            std::printf("%-7.2f", A[i][j]);
-        }
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-    
-}   // verify determinant
+    UI master;
+
+    while (master.master());
+
+}
+
+//#include <vector>
+//#include <iostream>
+//using std::vector;
+//
+//int main(){
+//    MatrixOps ops;
+//    vector<vector<Entries>> A; A.reserve(3);
+//    
+//    vector<Entries> row1 = {0, 0, 5};
+//    vector<Entries> row2 = {0, -3, 0};
+//    vector<Entries> row3 = {1.5, 0, 0};
+//    
+//    A.push_back(std::move(row1)); A.push_back(std::move(row2)); A.push_back(std::move(row3));
+//    
+//    ops.performDeterminant(A, 3);
+////    for (int i = 0 ; i < 3 ; i++){
+////        for (int j = 0 ; j < 3 ; j++){
+////            std::printf("%-7.2f", A[i][j]);
+////        }
+////        std::cout << std::endl;
+////    }
+////    std::cout << std::endl;
+////
+//}   // verify determinant
 
 
 
