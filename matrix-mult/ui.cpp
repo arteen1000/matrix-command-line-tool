@@ -443,13 +443,16 @@ void UI::deallocateDependencies(){
 void UI::performOperation(){
     switch(m_operation){
         case 0:
-            m_ops.performScalarMultiply(m_k, m_A, m_C, m_rowsC, m_colsC);
+            m_ops.scalarmult(m_k, m_A, m_C, m_rowsC, m_colsC);
             break;
         case 1:
-            m_ops.performMatrixAddition(m_A, m_B, m_C, m_rowsC, m_colsC);
+            m_ops.matrixadd(m_A, m_B, m_C, m_rowsC, m_colsC);
             break;
         case 2:
-            m_ops.performMatrixMultiply(m_A, m_B, m_C, m_rowsC, m_colsA, m_colsC);
+            m_ops.matrixmult(m_A, m_B, m_C, m_rowsC, m_colsA, m_colsC);
+            break;
+        case 3:
+            m_ops.determinant(A, m_rowsA);
             break;
         default:
             break;

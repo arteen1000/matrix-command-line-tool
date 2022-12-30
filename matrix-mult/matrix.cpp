@@ -11,7 +11,7 @@ using std::vector;
 // OPERATIONS
 // **********
 
-void MatrixOps::performScalarMultiply(const Entries k, const vector< Entries >& A, Entries* C, const int32_t rows, const int32_t cols){
+void MatrixOps::scalarmult(const Entries k, const vector< Entries >& A, Entries* C, const int32_t rows, const int32_t cols){
     
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
@@ -20,7 +20,7 @@ void MatrixOps::performScalarMultiply(const Entries k, const vector< Entries >& 
     }
 }
 
-void MatrixOps::performMatrixAddition(const vector< Entries >& A, const vector< Entries >& B, Entries* C, const int32_t rows, const int32_t cols){
+void MatrixOps::matrixadd(const vector< Entries >& A, const vector< Entries >& B, Entries* C, const int32_t rows, const int32_t cols){
     
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
@@ -30,7 +30,7 @@ void MatrixOps::performMatrixAddition(const vector< Entries >& A, const vector< 
 }
 // equal dims
 
-void MatrixOps::performMatrixMultiply(const std::vector< Entries >& A, const std::vector< Entries >& B, Entries* C, const int32_t rowsAC, const int32_t colsA_rowsB, const int32_t colsBC){
+void MatrixOps::matrixmult(const std::vector< Entries >& A, const std::vector< Entries >& B, Entries* C, const int32_t rowsAC, const int32_t colsA_rowsB, const int32_t colsBC){
     Entries placeholder = 0;
     // can tile here
     for (int i = 0 ; i < rowsAC; i++){
@@ -50,19 +50,28 @@ void MatrixOps::performMatrixMultiply(const std::vector< Entries >& A, const std
  C[ij] = A[ik] * B[kj]; // ith row of A * jth col of B -> intuitive ordering (how I do it in my head) would be i j k, not cache efficient
 */
 
-Entries MatrixOps::performDeterminant(const std::vector<Entries> & A, const int32_t n){
-//    if (1 == n) return A[0][0];
-//    if (2 == n) return ((A[0][0] * A[1][1]) - (A[0][1] * A[1][0]));
-//
-    Entries determinant = 0.0;
-//    vector<Entries> firstRow = A[0];
-//
-//    for (int i = 0 ; i < n ; i++){  // go through first row's
-//        Entries a = firstRow[i];
-//        for (int j = 1 ; j < n ; j++){  // nothing in top row, remove column i
-//
-//        }
-//    }
+void MatrixOps::cofactor(const std::vector<Entries>& A, std::vector<Entries>& cofactor, int32_t n, int32_t k){
+    
+    for (int i = 1 ; i < n ; i++){  // never take row 1
+        for (int j = 0 ; j < n ; j++){  // decide which col not to take
+            if (j == k) continue;
+            else cofactor.push_back(A[i*n + j]);    // very efficient
+        }
+    }
+}
+
+Entries MatrixOps::determinant(const std::vector<Entries> & A, const int32_t n){
+    if (1 == n) return A[0];
+    if (2 == n) return (A[0]*A[3] - A[1] * A[2]);
+    
+    Entries determinant = 0.0; int32_t sign = 1;
+    vector<Entries> C; C.reserve((n-1)*(n-1));
+    
+    for (int k = 0 ; k < n ; k++){
+        cofactor(A, C, n, k);
+        determinant += sign * A[k] * MatrixOps::determinant(C, n-1);
+        sign = -sign;
+    }
     
     return determinant;
 }
