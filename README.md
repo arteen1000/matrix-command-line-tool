@@ -28,7 +28,7 @@ As of right now, it can perform the following operations, with more coming soon:
 
 ## setting up the program
 
-###Linux/Unix platforms
+### Linux/Unix platforms
 
 Run these steps, in the order provided, in your terminal, and you'll be good to go:
 
