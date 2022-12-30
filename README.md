@@ -11,6 +11,7 @@ As of right now, it can perform the following operations, with more coming soon:
 - scalar multiplication
 - matrix addition
 - matrix multiplication
+- determinant
 
 ## basic instructions on how to use
 
@@ -20,7 +21,7 @@ As of right now, it can perform the following operations, with more coming soon:
 
 - The program will accept input of the form `Y Y Y` for the matrices (i.e, space separated numerical values). If you don't typically use spaces to separate your values, I don't know what to tell you. If you want to have 20 spaces between every value, you can do that, but you must have at least one space between any two values.
 
-- Please note that matrices cannot have a different number of entries in each row ... i.e, once you choose a certain number of columns, stick with it. The program won't let you input if it doesn't match your initial row's number of columns. As for matrix operations, remember that certain matrices are not compatible for certain operations.
+- Please note that matrices cannot have a different number of entries in each row ... i.e, once you choose a certain number of columns, stick with it. The program won't let you input if it doesn't match your initial row's number of columns. As for matrix operations, remember that certain matrices can't do certain things.
 
 - I think that's all, and I really doubt you'll have trouble using this, but if you do, you have my email, and I'll be happy to either (a) provide guidance or (b) adjust the program to suit your needs.
 
