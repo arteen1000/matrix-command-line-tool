@@ -28,25 +28,36 @@ using std::vector;
 bool UI::master(){
     
     handleUserInput();
-    if (verifyPossibleAndSetDims()){
+    bool verified;
+    if ((verified = verifyPossibleAndSetDims())){
         allocateDependencies();
         performOperationAndOutput();
-        deallocateDependencies();
     }
     else {
         cout << "Operation not possible with input dimensions." << endl << endl;
     }
     
-    cout << endl << "Perform another operation (1) or exit program (0): "; readInput(yesno, NaM);
+    cout << endl << "Perform another operation (1) or exit program (0): "; readInput(onezero, NaM);
     m_count++;
     
-    if (m_yesno) reinitializeConstructs();
-    return m_yesno;
+    if (m_continue && verified) {
+        switch(m_operation){
+            case 1:
+            case 2:
+                cout << "Save C into B? (Y/n) "; readInput(yesno, NaM);
+                refactorOther();
+                cout << "Save C into B? " << m_yesno << endl;
+            case 0:
+            case 3:
+                break;
+        }
+        reinitializeConstructs();
+    }
+    return m_continue;
 }
 
 // initial requirements
-UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0), m_prompt(1) , m_errors(0), m_yesno(0), m_count(0){
-    m_C = nullptr;
+UI::UI() : m_rowsA(0), m_colsA(1 << 31), m_rowsB(0), m_colsB(1 << 31), m_rowsC(0), m_colsC(0), m_prompt(1) , m_errors(0), m_continue(0), m_count(0), m_saved(0) {
     m_A.reserve(16);
     m_B.reserve(16);
 }
@@ -91,6 +102,8 @@ void UI::readInput(const InputType inputType, const MatrixID matrixID){
 bool UI::isValidInput(const string& input, const InputType inputType){
     switch(inputType){
         case yesno:
+            return input.find_first_not_of("Yn") == std::string::npos;
+        case onezero:
             return input.find_first_not_of("01") == std::string::npos;
         case operation:
             return input.find_first_not_of("0123") == std::string::npos;
@@ -110,10 +123,21 @@ bool UI::otherInput(const std::string & input, const InputType inputType){
         m_buffer >> m_operation;
         return true;
     } else if (inputType == scalar) return handleScalar(input);
-    else {
+    else if (inputType == onezero) {
         if (input.empty() || input.size() > 1) return false;
         m_buffer = istringstream(input);
-        m_buffer >> m_yesno;
+        m_buffer >> m_continue;
+        return true;
+    } else {
+        if (input.empty() || input.size() > 1) return false;
+        else if (input[0] == 'Y'){
+            m_yesno = "Yes";
+            m_saved = true;
+            swapBC();
+        } else {
+            m_yesno = "No";
+            m_saved = false;
+        }
         return true;
     }
 }
@@ -255,30 +279,27 @@ void UI::outputMatrix(const std::vector< Entries >& M, const int32_t rows, const
 }
 
 // output
-void UI::outputMatrix(const Entries* M, const int32_t rows, const int32_t cols){
-    for (int i = 0 ; i < rows ; i++){
-        for (int j = 0 ; j < cols ; j++){
-            std::printf("%-15.3f ", M[i*cols+j]);
-        }
-        cout << endl;
-    }
-    cout << endl;
-}
+//void UI::outputMatrix(const Entries* M, const int32_t rows, const int32_t cols){
+//    for (int i = 0 ; i < rows ; i++){
+//        for (int j = 0 ; j < cols ; j++){
+//            std::printf("%-15.3f ", M[i*cols+j]);
+//        }
+//        cout << endl;
+//    }
+//    cout << endl;
+//}
 
 void UI::refactorMatrix(const int32_t rows){
     for (int i = 0 ; i < rows + 1 + m_errors; i++)
         cout << UP_ONE_LINE DELETE_LINE;
+    m_prompt = true; m_errors = 0;
 }
 
 void UI::refactorOther(){
     for (int i = 0 ; i < m_errors + 1 ; i++)
         cout << UP_ONE_LINE DELETE_LINE;
-}
-
-void UI::resetRead(){
     m_prompt = true; m_errors = 0;
 }
-
 
 
 // *********
@@ -302,7 +323,6 @@ void UI::handleUserInput(){
     cout << "Option: "; readInput(operation, NaM);
     if (m_errors > 0){
         refactorOther();
-        resetRead();
         cout << "Option: " << m_operation << endl;
     }
     cout << endl;
@@ -332,7 +352,6 @@ void UI::readScalarMult(){
     cout << "k = "; readInput(scalar, NaM);
     if (m_errors > 0){
         refactorOther();
-        resetRead();
         cout << "k = " << m_k << endl;
     }
     cout << endl;
@@ -396,7 +415,6 @@ void UI::readMatrix(MatrixID ID){
         case NaM:
             break;
     }
-    resetRead();
 }
 
 
@@ -411,23 +429,24 @@ bool UI::verifyPossibleAndSetDims(){
         case 0:
             m_rowsC = m_rowsA;
             m_colsC = m_colsA;
+            m_C.resize(m_rowsC*m_colsC);
             return true;
         case 1:
             if (m_rowsA == m_rowsB && m_colsA == m_colsB) {
                 m_rowsC = m_rowsA;
                 m_colsC = m_colsA;
+                m_C.resize(m_rowsC*m_colsC);
                 return true;
             } else return false;
         case 2:
             if (m_colsA == m_rowsB){
                 m_rowsC = m_rowsA;
                 m_colsC = m_colsB;
+                m_C.resize(m_rowsC*m_colsC);
                 return true;
             } else return false;
         case 3:
             if (m_colsA == m_rowsA) {
-                m_colsC = m_colsA;
-                m_rowsC = m_rowsA;
                 return true;
             } else return false;
         default:
@@ -443,17 +462,17 @@ bool UI::verifyPossibleAndSetDims(){
 // **********
 
 // reserve C
-void UI::allocateDependencies(){
-    m_C = new Entries[m_rowsC * m_colsC];
-}
+//void UI::allocateDependencies(){
+//    m_C = new Entries[m_rowsC * m_colsC];
+//}
 
 // *************
 // DE-ALLOCATION
 // *************
 
-void UI::deallocateDependencies(){
-    delete [] m_C;
-}
+//void UI::deallocateDependencies(){
+//    delete [] m_C;
+//}
 
 // ****************
 // OPERATION OUTPUT
@@ -508,12 +527,19 @@ void UI::outputMatrixC(){
 // *******
 // RE-INIT
 // *******
+
 void UI::reinitializeConstructs(){
     m_rowsA = 0; m_colsA = 1 << 31; m_rowsB = 0; m_colsB = 1 << 31;
     m_rowsC = 0; m_colsC = 0; m_prompt = 1; m_errors = 0;
-    m_C = nullptr;
-    m_A = vector<Entries>(); m_A.reserve(16);
-    m_B = vector<Entries>(); m_B.reserve(16);
+    m_A.clear();
+    if (!m_saved) {m_B.clear()}
+    m_C.clear();
+}
+
+void UI::swapBC(){
+    vector<Entries> temp(std::move(m_B));
+    m_B = std::move(m_C);
+    m_C = std::move(temp);
 }
 
 

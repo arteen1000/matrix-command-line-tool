@@ -14,9 +14,9 @@ public:
     // OPERATIONS
     // **********
     
-    void scalarmult(const Entries, const std::vector< Entries >& A, Entries*, const int32_t, const int32_t);
-    void matrixadd(const std::vector< Entries >&, const std::vector< Entries >&, Entries*, const int32_t, const int32_t);
-    void matrixmult(const std::vector< Entries >&, const std::vector< Entries >&, Entries*, const int32_t, const int32_t, const int32_t);
+    void scalarmult(const Entries, const std::vector< Entries >& , std::vector< Entries >&, const int32_t, const int32_t);
+    void matrixadd(const std::vector< Entries >&, const std::vector< Entries >&, std::vector< Entries >&, const int32_t, const int32_t);
+    void matrixmult(const std::vector< Entries >&, const std::vector< Entries >&, std::vector< Entries >&, const int32_t, const int32_t, const int32_t);
     Entries determinant(const std::vector< Entries >&, int32_t);
     
 protected:

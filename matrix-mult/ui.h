@@ -10,9 +10,10 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <string>
 
 // ensure correct input received
-enum InputType {operation, scalar, matrix, yesno};
+enum InputType {operation, scalar, matrix, onezero, yesno};
 
 // ensure parsing for correct matrix -> NaM = Not a Matrix
 enum MatrixID {A, B, NaM};
@@ -74,8 +75,8 @@ protected:
     // output input matrices
     void outputMatrix(const std::vector< Entries >&, const int32_t, const int32_t);
     
-    // output output matrices
-    void outputMatrix(const Entries* M, const int32_t rows, const int32_t cols);
+//    // output output matrices
+//    void outputMatrix(const Entries* M, const int32_t rows, const int32_t cols);
     
     // delete inputted matrix presentation
     void refactorMatrix(const int32_t);
@@ -160,6 +161,9 @@ protected:
     // responsible for resetting all constructs to default
     void reinitializeConstructs();
     
+    // swap B and C if user desire
+    void swapBC();
+    
     
 private:
     // used to handle input allocation
@@ -182,7 +186,7 @@ private:
     std::vector< Entries > m_B;
     
     // based on A and B (allocated after user input)
-    Entries* m_C;
+    std::vector< Entries> m_C;
     
     // scalar
     Entries m_k;
@@ -199,11 +203,15 @@ private:
     // input errors
     int32_t m_errors;
     
-    // yesno?
-    bool m_yesno;
+    // continue to next program iteration
+    bool m_continue;
     
     // how many ops performed
     int32_t m_count;
+    
+    // save C into B?
+    std::string m_yesno;
+    bool m_saved;
 };
 
 #endif /* ui_hpp */

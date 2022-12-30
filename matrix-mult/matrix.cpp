@@ -11,7 +11,7 @@ using std::vector;
 // OPERATIONS
 // **********
 
-void MatrixOps::scalarmult(const Entries k, const vector< Entries >& A, Entries* C, const int32_t rows, const int32_t cols){
+void MatrixOps::scalarmult(const Entries k, const vector< Entries >& A, std::vector< Entries >& C, const int32_t rows, const int32_t cols){
     
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
@@ -20,7 +20,7 @@ void MatrixOps::scalarmult(const Entries k, const vector< Entries >& A, Entries*
     }
 }
 
-void MatrixOps::matrixadd(const vector< Entries >& A, const vector< Entries >& B, Entries* C, const int32_t rows, const int32_t cols){
+void MatrixOps::matrixadd(const vector< Entries >& A, const vector< Entries >& B, std::vector< Entries >& C, const int32_t rows, const int32_t cols){
     
     for (int i = 0 ; i < rows ; i++){
         for (int j = 0 ; j < cols ; j++){
@@ -30,7 +30,7 @@ void MatrixOps::matrixadd(const vector< Entries >& A, const vector< Entries >& B
 }
 // equal dims
 
-void MatrixOps::matrixmult(const std::vector< Entries >& A, const std::vector< Entries >& B, Entries* C, const int32_t rowsAC, const int32_t colsA_rowsB, const int32_t colsBC){
+void MatrixOps::matrixmult(const std::vector< Entries >& A, const std::vector< Entries >& B, std::vector< Entries >& C, const int32_t rowsAC, const int32_t colsA_rowsB, const int32_t colsBC){
     Entries placeholder = 0;
     // can tile here
     for (int i = 0 ; i < rowsAC; i++){
@@ -71,7 +71,7 @@ Entries MatrixOps::determinant(const std::vector<Entries> & A, const int32_t n){
         cofactor(A, C, n, k);
         determinant += sign * A[k] * MatrixOps::determinant(C, n-1);
         sign = -sign;
-        C = vector<Entries>();
+        C.clear();
     }
     
     return determinant;
