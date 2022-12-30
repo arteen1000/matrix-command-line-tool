@@ -28,6 +28,8 @@ As of right now, it can perform the following operations, with more coming soon:
 
 ## setting up the program
 
+###Linux/Unix platforms
+
 Run these steps, in the order provided, in your terminal, and you'll be good to go:
 
 - `git clone https://github.com/arteen1000/matrix-command-line-tool.git matrix-clt`
