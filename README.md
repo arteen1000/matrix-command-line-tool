@@ -13,6 +13,8 @@ As of right now, it can perform the following operations, with more coming soon:
 - matrix multiplication
 - determinant
 
+[This is what it looks like on your terminal.](./imgs/program-interface)
+
 ## basic instructions on how to use
 
 - **This is the most important thing on this page:** once you're done inputting the data for a matrix, and you see `Row X: `, just press ***`Enter`***, and the program will be able to tell that you're done inputting your matrix. This is to allow you to input them as fast as possible, without having to type something like `Done` or `N/A`.
