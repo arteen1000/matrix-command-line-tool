@@ -112,7 +112,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "301"
             endingLineNumber = "301"
-            landmarkName = "UI::outputMatrix(M, rows, cols)"
+            landmarkName = "UI::handleUserInput()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -128,7 +128,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "328"
             endingLineNumber = "328"
-            landmarkName = "UI::outputMatrix(M, rows, cols)"
+            landmarkName = "UI::readScalarMult()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -240,7 +240,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "391"
             endingLineNumber = "391"
-            landmarkName = "UI::outputMatrix(M, rows, cols)"
+            landmarkName = "UI::verifyPossible()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
