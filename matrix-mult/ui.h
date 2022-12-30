@@ -112,6 +112,7 @@ protected:
     
     // wrappers for common functionality
     void readMatrixA();
+    void readMatrixB();
     void readMatrixAB();
     
     // individual matrix read (actual reading)
@@ -129,8 +130,8 @@ protected:
     // ALLOCATION
     // **********
     
-    // allocate output matrices
-    void allocateDependencies();
+//    // allocate output matrices
+//    void allocateDependencies();
     
     // ****************
     // OPERATION OUTPUT
@@ -151,8 +152,8 @@ protected:
     // DE-ALLOCATION
     // *************
     
-    // deallocate output matrices
-    void deallocateDependencies();
+//    // deallocate output matrices
+//    void deallocateDependencies();
     
     // *******
     // RE-INIT
@@ -160,6 +161,7 @@ protected:
     
     // responsible for resetting all constructs to default
     void reinitializeConstructs();
+    
     
     // swap B and C if user desire
     void swapBC();

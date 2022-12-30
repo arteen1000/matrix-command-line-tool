@@ -30,7 +30,7 @@ bool UI::master(){
     handleUserInput();
     bool verified;
     if ((verified = verifyPossibleAndSetDims())){
-        allocateDependencies();
+//        allocateDependencies();
         performOperationAndOutput();
     }
     else {
@@ -42,13 +42,15 @@ bool UI::master(){
     
     if (m_continue && verified) {
         switch(m_operation){
+            case 0:
             case 1:
             case 2:
                 cout << "Save C into B? (Y/n) "; readInput(yesno, NaM);
                 refactorOther();
                 cout << "Save C into B? " << m_yesno << endl;
-            case 0:
+                break;
             case 3:
+                m_saved = 0;    // unsave as just took det(B), unlikely still need.
                 break;
         }
         reinitializeConstructs();
@@ -318,7 +320,7 @@ void UI::handleUserInput(){
     cout << "(0) kA = C" << endl;
     cout << "(1) A+B = C" << endl;
     cout << "(2) AB = C" << endl;
-    cout << "(3) det(A)" << endl << endl;
+    cout << "(3) det(B)" << endl << endl;
     
     cout << "Option: "; readInput(operation, NaM);
     if (m_errors > 0){
@@ -363,21 +365,23 @@ void UI::readMatrixAdd(){
     cout << "Matrix Addition" << endl;
     cout << "---------------" << endl << endl;
     
-    readMatrixAB();
+    if (!m_saved) readMatrixAB();
+    else readMatrixA();
 }
 
 void UI::readMatrixMult(){
     cout << "Matrix Multiplication" << endl;
     cout << "---------------" << endl << endl;
     
-    readMatrixAB();
+    if (!m_saved) readMatrixAB();
+    else readMatrixA();
 }
 
 void UI::readDeterminant(){
     cout << "Determinant" << endl;
     cout << "-----------" << endl << endl;
     
-    readMatrixA();
+    if (!m_saved) readMatrixB();
 }
 
 // SLAVES ON SLAVES
@@ -387,6 +391,12 @@ void UI::readMatrixA(){
     cout << "Matrix A" << endl;
     cout << "--------" << endl << endl;
     readMatrix(A);
+}
+
+void UI::readMatrixB(){
+    cout << "Matrix B" << endl;
+    cout << "--------" << endl << endl;
+    readMatrix(B);
 }
 
 void UI::readMatrixAB(){
@@ -446,7 +456,7 @@ bool UI::verifyPossibleAndSetDims(){
                 return true;
             } else return false;
         case 3:
-            if (m_colsA == m_rowsA) {
+            if (m_colsB == m_rowsB) {
                 return true;
             } else return false;
         default:
@@ -493,7 +503,7 @@ void UI::performOperationAndOutput(){
             m_ops.matrixmult(m_A, m_B, m_C, m_rowsC, m_colsA, m_colsC);
             break;
         case 3:
-            m_k = m_ops.determinant(m_A, m_rowsA);
+            m_k = m_ops.determinant(m_B, m_rowsB);
             break;
         default:
             break;
@@ -529,17 +539,18 @@ void UI::outputMatrixC(){
 // *******
 
 void UI::reinitializeConstructs(){
-    m_rowsA = 0; m_colsA = 1 << 31; m_rowsB = 0; m_colsB = 1 << 31;
-    m_rowsC = 0; m_colsC = 0; m_prompt = 1; m_errors = 0;
-    m_A.clear();
-    if (!m_saved) {m_B.clear()}
-    m_C.clear();
+    m_prompt = 1; m_errors = 0;
+    m_A.clear(); m_rowsA = 0; m_colsA = 1 << 31;
+    m_C.clear(); m_rowsC = 0; m_colsC = 0;
+    if (!m_saved) {m_B.clear(); m_rowsB = 0; m_colsB = 1 << 31;}
 }
 
 void UI::swapBC(){
     vector<Entries> temp(std::move(m_B));
     m_B = std::move(m_C);
     m_C = std::move(temp);
+    m_rowsB = m_rowsC;
+    m_colsB = m_colsC;
 }
 
 
