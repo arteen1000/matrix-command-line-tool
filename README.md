@@ -22,7 +22,7 @@ As of right now, it can perform the following operations, with more coming soon:
 
 - I think that's all, and I really doubt you'll have trouble using this, but if you do, you have my email, and I'll be happy to either (a) provide guidance or (b) adjust the program to suit your needs.
 
-- Also, I don't think this'll come up, but if you have a terminal that doesn't support ANSI/VT100 escape sequences, you might run into some wonky output. Email me at arteen1000@gmail and I'll try to help resolve.
+- Also, I don't think this'll come up, but if you have a terminal that doesn't support ANSI/VT100 escape sequences, you might run into some wonky output. Email me and I'll try to help resolve.
 
 ## setting up the program
 
