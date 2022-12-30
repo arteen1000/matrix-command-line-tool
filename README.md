@@ -18,7 +18,7 @@ As of right now, it can perform the following operations, with more coming soon:
 
 - The program will accept input of the forms `X.X`, `.X`, `-X.X`, `-.X`, but not `X.` or `-X.`. If you would seriously like to format your input in this way, you can file a complaint at arteen1000@gmail.com.
 
-- The program will accept input of the form `Y Y Y` for the matrices (i.e, space separated numerical values). If you don't typically use spaces to separate your values, I don't know what to tell you. If you want to have 20 spaces between every value, you can do that, but you must have at least one space between two values.
+- The program will accept input of the form `Y Y Y` for the matrices (i.e, space separated numerical values). If you don't typically use spaces to separate your values, I don't know what to tell you. If you want to have 20 spaces between every value, you can do that, but you must have at least one space between any two values.
 
 - Please note that matrices cannot have a different number of entries in each row ... i.e, once you choose a certain number of columns, stick with it. The program won't let you input if it doesn't match your initial row's number of columns.
 
