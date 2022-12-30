@@ -22,7 +22,7 @@ As of right now, it can perform the following operations, with more coming soon:
 
 - I think that's all, and I really doubt you'll have trouble using this, but if you do, you have my email, and I'll be happy to either (a) provide guidance or (b) adjust the program to suit your needs.
 
-- Also, I don't think this'll come up, but if you have a terminal that doesn't support ANSI/VT100 escape sequences, you might run into some wonky output. Email me and I'll try to help resolve. If you don't want to email me, just comment out the parts that have to do with refactoring input data before compiling, and you'll be good to go.
+- Also, I don't think this'll come up, but if you have a terminal that doesn't support ANSI/VT100 escape sequences, you might run into some wonky output. Email me and I'll try to help resolve. If you don't want to email me, just comment out the parts that have to do with refactoring input data before compiling, and the program will run perfectly fine, only your ugly input data won't be reformatted on your terminal prettily.
 
 ## setting up the program
 
