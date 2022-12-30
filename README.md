@@ -13,7 +13,7 @@ As of right now, it can perform the following operations, with more coming soon:
 - matrix multiplication
 - determinant
 
-[This is what it looks like on your terminal.](./imgs/program-interface)
+[This is what it looks like on your terminal.](./imgs/program-interface.png)
 
 ## basic instructions on how to use
 
