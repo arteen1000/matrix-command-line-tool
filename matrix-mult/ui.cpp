@@ -28,9 +28,9 @@ using std::vector;
 bool UI::master(){
     
     handleUserInput();
-    if (verifyPossible()){
+    if (verifyPossibleAndSetDims()){
         allocateDependencies();
-        performOperation();
+        performOperationAndOutput();
         deallocateDependencies();
     }
     else {
@@ -93,7 +93,7 @@ bool UI::isValidInput(const string& input, const InputType inputType){
         case yesno:
             return input.find_first_not_of("01") == std::string::npos;
         case operation:
-            return input.find_first_not_of("012") == std::string::npos;
+            return input.find_first_not_of("0123") == std::string::npos;
         case scalar:
             return input.find_first_not_of("0123456789-.") == std::string::npos;
         case matrix:
@@ -296,7 +296,8 @@ void UI::handleUserInput(){
     cout << "Select an option below: " << endl << endl;
     cout << "(0) kA = C" << endl;
     cout << "(1) A+B = C" << endl;
-    cout << "(2) AB = C" << endl << endl;
+    cout << "(2) AB = C" << endl;
+    cout << "(3) det(A)" << endl << endl;
     
     cout << "Option: "; readInput(operation, NaM);
     if (m_errors > 0){
@@ -314,6 +315,9 @@ void UI::handleUserInput(){
             break;
         case 2:
             readMatrixMult();
+            break;
+        case 3:
+            readDeterminant();
             break;
     }
 }
@@ -333,9 +337,7 @@ void UI::readScalarMult(){
     }
     cout << endl;
     
-    cout << "Matrix A" << endl;
-    cout << "--------" << endl << endl;
-    readMatrix(A);
+    readMatrixA();
 }
 
 void UI::readMatrixAdd(){
@@ -350,6 +352,22 @@ void UI::readMatrixMult(){
     cout << "---------------" << endl << endl;
     
     readMatrixAB();
+}
+
+void UI::readDeterminant(){
+    cout << "Determinant" << endl;
+    cout << "-----------" << endl << endl;
+    
+    readMatrixA();
+}
+
+// SLAVES ON SLAVES
+// ---------------
+
+void UI::readMatrixA(){
+    cout << "Matrix A" << endl;
+    cout << "--------" << endl << endl;
+    readMatrix(A);
 }
 
 void UI::readMatrixAB(){
@@ -388,7 +406,7 @@ void UI::readMatrix(MatrixID ID){
 
 
 // verify operation possibility based on user input && set dims of output
-bool UI::verifyPossible(){
+bool UI::verifyPossibleAndSetDims(){
     switch(m_operation){
         case 0:
             m_rowsC = m_rowsA;
@@ -399,15 +417,19 @@ bool UI::verifyPossible(){
                 m_rowsC = m_rowsA;
                 m_colsC = m_colsA;
                 return true;
-            }
-            else return false;
+            } else return false;
         case 2:
             if (m_colsA == m_rowsB){
                 m_rowsC = m_rowsA;
                 m_colsC = m_colsB;
                 return true;
-            }
-            else return false;
+            } else return false;
+        case 3:
+            if (m_colsA == m_rowsA) {
+                m_colsC = m_colsA;
+                m_rowsC = m_rowsA;
+                return true;
+            } else return false;
         default:
             break;
     }
@@ -440,7 +462,7 @@ void UI::deallocateDependencies(){
 // MASTER
 // ------
 
-void UI::performOperation(){
+void UI::performOperationAndOutput(){
     switch(m_operation){
         case 0:
             m_ops.scalarmult(m_k, m_A, m_C, m_rowsC, m_colsC);
@@ -452,7 +474,7 @@ void UI::performOperation(){
             m_ops.matrixmult(m_A, m_B, m_C, m_rowsC, m_colsA, m_colsC);
             break;
         case 3:
-            m_ops.determinant(A, m_rowsA);
+            m_k = m_ops.determinant(m_A, m_rowsA);
             break;
         default:
             break;
@@ -464,6 +486,8 @@ void UI::performOperation(){
         case 2:
             outputMatrixC();
             break;
+        case 3:
+            cout << "determinant = " << m_k << endl;
         default:
             break;
     }

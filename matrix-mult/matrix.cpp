@@ -50,12 +50,12 @@ void MatrixOps::matrixmult(const std::vector< Entries >& A, const std::vector< E
  C[ij] = A[ik] * B[kj]; // ith row of A * jth col of B -> intuitive ordering (how I do it in my head) would be i j k, not cache efficient
 */
 
-void MatrixOps::cofactor(const std::vector<Entries>& A, std::vector<Entries>& cofactor, int32_t n, int32_t k){
+void MatrixOps::cofactor(const std::vector<Entries>& A, std::vector<Entries>& C, int32_t n, int32_t k){
     
     for (int i = 1 ; i < n ; i++){  // never take row 1
         for (int j = 0 ; j < n ; j++){  // decide which col not to take
             if (j == k) continue;
-            else cofactor.push_back(A[i*n + j]);    // very efficient
+            else C.push_back(A[i*n + j]);    // very efficient
         }
     }
 }
@@ -71,6 +71,7 @@ Entries MatrixOps::determinant(const std::vector<Entries> & A, const int32_t n){
         cofactor(A, C, n, k);
         determinant += sign * A[k] * MatrixOps::determinant(C, n-1);
         sign = -sign;
+        C = vector<Entries>();
     }
     
     return determinant;

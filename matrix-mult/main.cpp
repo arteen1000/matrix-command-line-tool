@@ -18,30 +18,51 @@ int main(){
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+// determinant verification
+
 //#include <vector>
 //#include <iostream>
-//using std::vector;
+//using namespace std;
+
+//int main(){     // verify base cases & two levels of recursion for determinant :)
+//    vector<double> N1 = {3};    // determinant = 3
+//    vector<double> N2 = {1, 2, 3, 4};   // determinant = -2
+//    vector<double> N3 = {1, 2, 3, 4, 5, 6, 7, 8, 9};    // determinant = 0
+//    vector<double> N4 = {1, 0, 0, 0, 0, -5, 0, 0, 0, 0, 8, 0, 0, 0, 0, 0.5};    // determinant = -20
 //
-//int main(){
-//    MatrixOps ops;
-//    vector<vector<Entries>> A; A.reserve(3);
-//    
-//    vector<Entries> row1 = {0, 0, 5};
-//    vector<Entries> row2 = {0, -3, 0};
-//    vector<Entries> row3 = {1.5, 0, 0};
-//    
-//    A.push_back(std::move(row1)); A.push_back(std::move(row2)); A.push_back(std::move(row3));
-//    
-//    ops.performDeterminant(A, 3);
-////    for (int i = 0 ; i < 3 ; i++){
-////        for (int j = 0 ; j < 3 ; j++){
-////            std::printf("%-7.2f", A[i][j]);
-////        }
-////        std::cout << std::endl;
-////    }
-////    std::cout << std::endl;
-////
-//}   // verify determinant
+//    double determinant; MatrixOps ops;
+//
+//    determinant = ops.determinant(N1, 1);
+//    cout << determinant << endl;
+//    determinant = ops.determinant(N2, 2);
+//    cout << determinant << endl;
+//    determinant = ops.determinant(N3, 3);
+//    cout << determinant << endl;
+//    determinant = ops.determinant(N4, 4);
+//    cout << determinant << endl;
+//
+//}   // works :)
+
+
+
+
+
+
+
+
+
 
 
 

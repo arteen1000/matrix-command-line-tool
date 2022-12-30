@@ -103,11 +103,17 @@ protected:
     void readScalarMult();
     void readMatrixAdd();
     void readMatrixMult();
+    void readDeterminant();
     
-    // fairly common functionality
+    
+    // SLAVES ON SLAVES
+    // ---------------
+    
+    // wrappers for common functionality
+    void readMatrixA();
     void readMatrixAB();
     
-    // individual matrix read
+    // individual matrix read (actual reading)
     void readMatrix(MatrixID);
     
     // ************
@@ -115,7 +121,7 @@ protected:
     // ************
     
     // verify operation possibility based on user input && set dims of output
-    bool verifyPossible();
+    bool verifyPossibleAndSetDims();
     
     
     // **********
@@ -133,7 +139,7 @@ protected:
     // ------
     
     // responsible for performing the m_operation && displaying result to user
-    void performOperation();
+    void performOperationAndOutput();
     
     // SLAVES
     // ------
