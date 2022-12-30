@@ -32,6 +32,7 @@ Run these steps, in the order provided, in your terminal, and you'll be good to 
 
 - `git clone https://github.com/arteen1000/matrix-command-line-tool.git matrix-clt`
 - `cd matrix-clt/matrix-mult`
+- `chmod +x compile.sh`
 - `./compile.sh`
 
 At this point, you'll have an executable file called called `matrix` that you can run at any time using `./matrix`.
