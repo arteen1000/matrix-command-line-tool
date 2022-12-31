@@ -39,7 +39,7 @@ As of right now, the program can perform the following operations, with more com
 
 ### Linux/Unix platforms
 
-Run these steps, in the order provided, in your terminal, and you'll be good to go:
+Run these commands in your terminal, in the order provided, and you'll be good to go:
 
 - `git clone https://github.com/arteen1000/matrix-command-line-tool.git matrix-clt`
 - `cd matrix-clt/matrix-mult`
