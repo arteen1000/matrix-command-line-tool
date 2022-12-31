@@ -41,7 +41,7 @@ bool UI::master(){
     
     cout << endl << "Perform another operation (1) or exit program (0): "; readInput(onezero, NaM);
     refactorOther();
-    cout << "Perform another operation (1) or exit program (0): " << m_continue;
+    cout << "Perform another operation (1) or exit program (0): " << m_continue << std::flush << endl;
     m_count++;
     
     if (m_continue) {
@@ -103,6 +103,10 @@ void UI::readInput(const InputType inputType, const MatrixID matrixID){
         std::getline(cin, s);
         if (!(isValidInput(s, inputType)) || (!otherInput(s, inputType) && !matrixInput(s, matrixID))){
             cout << "Invalid input. Try again: "; m_errors++;
+            if (m_errors > 3){
+                cout << endl << "Too many invalid input attempts. Program terminating." << endl;
+                exit(-1);
+            }
             goto retry;
         }
 }
@@ -124,20 +128,21 @@ bool UI::isValidInput(const string& input, const InputType inputType){
 }
 
 bool UI::otherInput(const std::string & input, const InputType inputType){
+    if (input.empty()) return false;
     if (inputType == matrix) return false;
     else if (inputType == operation){
-        if (input.empty() || input.size() > 1 ) return false;
+        if (input.size() > 1 ) return false;
         m_buffer = istringstream(input);
         m_buffer >> m_operation;
         return true;
     } else if (inputType == scalar) return handleScalar(input);
     else if (inputType == onezero) {
-        if (input.empty() || input.size() > 1) return false;
+        if (input.size() > 1) return false;
         m_buffer = istringstream(input);
         m_buffer >> m_continue;
         return true;
     } else {
-        if (input.empty() || input.size() > 1) return false;
+        if (input.size() > 1) return false;
         else if (input[0] == 'Y'){
             m_yesno = "Yes";
             m_saved = true;
@@ -180,14 +185,22 @@ bool UI::matrixInput(const string& input, const MatrixID matrixID){
     
     if (!validateMatrixInputFormat(input)) return false;
     
-    if (input.empty()){
-        m_prompt = false; return true;
-    }
-
     switch(matrixID){
         case A:
+            if (input.empty()){
+                if (m_colsA == 1 << 31) return false;
+                else {
+                    m_prompt = false; return true;
+                }
+            }
             return handleMatrixA(input);
         case B:
+            if (input.empty()){
+                if (m_colsB == 1 << 31) return false;
+                else {
+                    m_prompt = false; return true;
+                }
+            }
             return handleMatrixB(input);    // if (!m_buffer.eof()) return false;
         case NaM:
             break;
@@ -552,9 +565,10 @@ void UI::reinitializeConstructs(){
 }
 
 void UI::swapBC(){
-    vector<Entries> temp(std::move(m_B));
-    m_B = std::move(m_C);
-    m_C = std::move(temp);
+//    vector<Entries> temp(std::move(m_B));
+//    m_B = std::move(m_C);
+//    m_C = std::move(temp);
+    std::swap(m_B, m_C);
     m_rowsB = m_rowsC;
     m_colsB = m_colsC;
 }
