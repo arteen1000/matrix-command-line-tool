@@ -47,8 +47,7 @@ Run these steps, in the order provided, in your terminal, and you'll be good to 
 At this point, you'll have an executable file called called `matrix` that you can run at any time using `./matrix`.
 
 If I were you, at this point I would run:
-
-<sub> do not do this if you don't know what you're doing </sub>
+<sub>do not do this without the help of a file manager if you don't know what you're doing</sub>
 
 - `mv matrix path/to/your/directory/you/would/like/it/in`
 - `cd ../..`
