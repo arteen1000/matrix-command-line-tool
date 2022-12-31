@@ -50,7 +50,7 @@ At this point, you'll have an executable file called called `matrix` in `../../m
 
 If you know what you're doing, then if I were you, at this point I would run:
 
-- `mv matrix path/to/your/directory/you/would/like/it/in`
+- `mv matrix _path/to/your/directory/you/would/like/it/in_`
 - `cd ../..`
 - `rm -rf matrix-clt`
 
