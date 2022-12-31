@@ -29,7 +29,7 @@ As of right now, it can perform the following operations, with more coming soon:
 
 - Please note that matrices cannot have a different number of entries in each row ... i.e, once you choose a certain number of columns, stick with it. The program won't let you input if it doesn't match your initial row's number of columns. As for matrix operations, remember that certain matrices can't do certain things, and again, the program'll tell you.
 
-- I think that's all, and I really doubt you'll have trouble using this, but if you do, you can email me at [Arteen Abrishami](mailto:arteen1000@gmail.com?subject=[GitHub]%20matrix-command-line-tool), and I'll be happy to either (a) provide guidance or (b) adjust the program to suit your needs.
+- I think that's all, and I really doubt you'll have trouble using this, but if you do, you can email me at [Arteen Abrishami](mailto:arteen1000@gmail.com?subject=[github]%20matrix-command-line-tool), and I'll be happy to either (a) provide guidance or (b) adjust the program to suit your needs.
 
 - Also, I don't think this'll come up, but if you have a terminal that doesn't support ANSI/VT100 escape sequences, you might run into some wonky output. Email me and I'll try to help resolve. If you don't want to email me, just comment out the parts that have to do with refactoring input data before you compile the program, and it should run perfectly fine, only your input data won't be reformatted on your terminal prettily.
 
@@ -47,7 +47,8 @@ Run these steps, in the order provided, in your terminal, and you'll be good to 
 At this point, you'll have an executable file called called `matrix` that you can run at any time using `./matrix`.
 
 If I were you, at this point I would run:
-<sub> do not do this if you don't know what you're doing <\sub>
+
+<sub> do not do this if you don't know what you're doing </sub>
 
 - `mv matrix path/to/your/directory/you/would/like/it/in`
 - `cd ../..`
