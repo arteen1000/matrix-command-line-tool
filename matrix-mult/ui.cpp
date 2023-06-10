@@ -18,6 +18,11 @@ using std::cout;
 using std::endl;
 using std::vector;
 
+// #define TIME
+#ifdef TIME
+#include <chrono>
+#endif
+
 
 #define UP_ONE_LINE "\033[A"
 #define DELETE_LINE "\033[2K"
@@ -31,9 +36,30 @@ bool UI::master(){
     
     handleUserInput();
     bool performed;
+    
+#ifdef TIME
+    using std::chrono::high_resolution_clock;
+    using std::chrono::duration_cast;
+    using std::chrono::duration;
+//    using std::chrono::milliseconds;
+    using std::chrono::microseconds;
+    
+    auto t1 = high_resolution_clock::now();
+#endif
+    
     if ((performed = verifyPossibleAndSetDims())){
 //        allocateDependencies();
         performOperationAndOutput();
+#ifdef TIME
+        auto elapsed = high_resolution_clock::now() - t1;
+        
+        long long microseconds = std::chrono::duration_cast<std::chrono::microseconds>(
+                elapsed).count();
+        
+        cout << "Microseconds processing: " << microseconds << endl;
+#endif
+        
+        
     }
     else {
         cout << "Operation not possible with input dimensions." << endl << endl;
